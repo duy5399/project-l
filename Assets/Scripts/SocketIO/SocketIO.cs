@@ -11,6 +11,8 @@ public class SocketIO : MonoBehaviour
 
     [SerializeField] private LoginSocketIO _loginSocketIO;
     [SerializeField] private RegisterSocketIO _registerSocketIO;
+    [SerializeField] private CharacterSocketIO _characterSocketIO;
+    [SerializeField] private ChatSocketIO _chatSocketIO;
 
     public LoginSocketIO loginSocketIO
     {
@@ -19,6 +21,14 @@ public class SocketIO : MonoBehaviour
     public RegisterSocketIO registerSocketIO
     {
         get { return _registerSocketIO; }
+    }
+    public CharacterSocketIO characterSocketIO
+    {
+        get { return _characterSocketIO; }
+    }
+    public ChatSocketIO chatSocketIO
+    {
+        get { return _chatSocketIO; }
     }
 
     private void Awake()
@@ -33,6 +43,8 @@ public class SocketIO : MonoBehaviour
         }
         _loginSocketIO = new LoginSocketIO();
         _registerSocketIO = new RegisterSocketIO();
+        _characterSocketIO = new CharacterSocketIO();
+        _chatSocketIO = new ChatSocketIO();
 
     }
 
@@ -46,6 +58,8 @@ public class SocketIO : MonoBehaviour
 
         _loginSocketIO.LoginSocketIOStart();
         _registerSocketIO.RegisterSocketIOStart();
+        _characterSocketIO.CharacterSocketIOStart();
+        _chatSocketIO.ChatSocketIOStart();
     }
 
     // Update is called once per frame

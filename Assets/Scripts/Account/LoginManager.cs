@@ -8,10 +8,12 @@ using UnityEngine.UI;
 public class LoginManager : MonoBehaviour
 {
     public static LoginManager instance { get; private set; }
+
     [SerializeField] private TMP_InputField usernameInputField;
     [SerializeField] private TMP_InputField passwordInputField;
     [SerializeField] private Button loginButton;
     [SerializeField] private TextMeshProUGUI _alertText;
+    
     public TextMeshProUGUI alertText
     {
         get { return _alertText; }
@@ -38,13 +40,15 @@ public class LoginManager : MonoBehaviour
         usernameInputField.text = string.Empty;
         passwordInputField.text = string.Empty;
         loginButton.onClick.AddListener(OnClick_Login);
+        alertText.text = string.Empty;
     }
 
     private void OnDisable()
     {
         usernameInputField.text = string.Empty;
         passwordInputField.text = string.Empty;
-        loginButton?.onClick.RemoveListener(OnClick_Login);
+        loginButton.onClick.RemoveListener(OnClick_Login);
+        alertText.text = string.Empty;
     }
 
     void Start()
@@ -59,6 +63,7 @@ public class LoginManager : MonoBehaviour
 
     void OnClick_Login()
     {
+        UIManager.instance.loading01Panel.gameObject.SetActive(true);
         SocketIO.instance.loginSocketIO.Emit_Login(usernameInputField.text, passwordInputField.text);
     }
 }
