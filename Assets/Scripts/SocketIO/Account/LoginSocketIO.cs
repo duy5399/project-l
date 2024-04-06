@@ -6,6 +6,7 @@ using UnityEngine;
 [Serializable]
 public class LoginSocketIO
 {
+    #region On (lắng nghe sự kiện)
     public void LoginSocketIOStart()
     {
         SocketIO.instance.socketManager.Socket.On<string>("login-success-no-character", (success) => {
@@ -41,6 +42,7 @@ public class LoginSocketIO
         LoginManager.instance.alertText.text = error;
         LoginManager.instance.alertText.color = Color.red;
     }
+    #endregion
 
     #region Emit (gửi sự kiện)
     public void Emit_Login(string username, string password)

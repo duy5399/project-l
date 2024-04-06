@@ -32,6 +32,7 @@ public class CharacterManager : MonoBehaviour
         createCharacterButton = transform.GetChild(1).GetComponent<Button>();
         alertText = transform.GetChild(2).GetComponent<TextMeshProUGUI>();
     }
+
     private void OnEnable()
     {
         nicknameInputField.text = string.Empty;

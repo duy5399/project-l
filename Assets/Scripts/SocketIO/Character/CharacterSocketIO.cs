@@ -6,6 +6,7 @@ using UnityEngine;
 [Serializable]
 public class CharacterSocketIO
 {
+    #region On (lắng nghe sự kiện)
     public void CharacterSocketIOStart()
     {
         SocketIO.instance.socketManager.Socket.On<string>("create-character-success", (success) => {
@@ -30,6 +31,7 @@ public class CharacterSocketIO
         CharacterManager.instance.alertText.text = error;
         CharacterManager.instance.alertText.color = Color.red;
     }
+    #endregion
 
     #region Emit (gửi sự kiện)
     public void Emit_CreateCharacter(string nickname)
