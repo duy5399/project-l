@@ -208,11 +208,19 @@ public class MainChatManager : MonoBehaviour
     public void DisplayMsg(string chatInfo, bool isReveice)
     {
         ChatInfoJSON chatInfoJSON = JsonConvert.DeserializeObject<ChatInfoJSON>(chatInfo);
+<<<<<<< HEAD
         GameObject newChat = Instantiate(Resources.Load<GameObject>("prefab/chat/" + (isReveice == true ? "OtherChatMessage" : "MyChatMessage")));
         ChatInfoManager chatInfoManager = newChat.GetComponent<ChatInfoManager>();
         chatInfoManager.chatInfoJSON = chatInfoJSON;
         chatInfoManager.borderImage.sprite = Resources.Load<Sprite>("image/borderProfile/" + chatInfoJSON.borderProfile);
         chatInfoManager.profileImage.sprite = Resources.Load<Sprite>("image/profileImage/" + chatInfoJSON.profileImg);
+=======
+        GameObject newChat = Instantiate(Resources.Load<GameObject>("Prefab/Chat/" + (isReveice == true ? "OtherChatMessage" : "MyChatMessage")));
+        ChatInfoManager chatInfoManager = newChat.GetComponent<ChatInfoManager>();
+        chatInfoManager.chatInfoJSON = chatInfoJSON;
+        chatInfoManager.borderImage.sprite = Resources.Load<Sprite>("Image/BorderProfile/" + chatInfoJSON.borderProfile);
+        chatInfoManager.profileImage.sprite = Resources.Load<Sprite>("Image/ProfileImage/" + chatInfoJSON.profileImg);
+>>>>>>> fe0eb62cff20252f9182d96088b832c039117485
         chatInfoManager.nicknameText.text = chatInfoJSON.nickname;
         chatInfoManager.levelText.text = "Lv. " + chatInfoJSON.level;
         chatInfoManager.msgText.text = chatInfoJSON.msg;
@@ -318,11 +326,19 @@ public class MainChatManager : MonoBehaviour
 
     public void NewPrivateChat(ChatInfoJSON ChatInfoJSON)
     {
+<<<<<<< HEAD
         GameObject newPrivateChat = Instantiate(Resources.Load<GameObject>("prefab/friend/FriendInfo_Friend"));
         FriendInfo_Friend friendInfoManager = newPrivateChat.GetComponent<FriendInfo_Friend>();
         friendInfoManager.friendInfoJSON.nickname = ChatInfoJSON.nickname;
         friendInfoManager.borderImage.sprite = Resources.Load<Sprite>("image/borderProfile/" + ChatInfoJSON.borderProfile);
         friendInfoManager.profileImage.sprite = Resources.Load<Sprite>("image/profileImage/" + ChatInfoJSON.profileImg);
+=======
+        GameObject newPrivateChat = Instantiate(Resources.Load<GameObject>("Prefab/Friend/FriendInfo_Friend"));
+        FriendInfo_Friend friendInfoManager = newPrivateChat.GetComponent<FriendInfo_Friend>();
+        friendInfoManager.friendInfoJSON.nickname = ChatInfoJSON.nickname;
+        friendInfoManager.borderImage.sprite = Resources.Load<Sprite>("Image/BorderProfile/" + ChatInfoJSON.borderProfile);
+        friendInfoManager.profileImage.sprite = Resources.Load<Sprite>("Image/ProfileImage/" + ChatInfoJSON.profileImg);
+>>>>>>> fe0eb62cff20252f9182d96088b832c039117485
         friendInfoManager.nicknameText.text = ChatInfoJSON.nickname;
         friendInfoManager.levelText.text = ChatInfoJSON.level;
         newPrivateChat.transform.SetParent(privateChatList);
