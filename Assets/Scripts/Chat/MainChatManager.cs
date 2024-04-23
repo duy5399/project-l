@@ -211,8 +211,8 @@ public class MainChatManager : MonoBehaviour
         GameObject newChat = Instantiate(Resources.Load<GameObject>("prefab/chat/" + (isReveice == true ? "OtherChatMessage" : "MyChatMessage")));
         ChatInfoManager chatInfoManager = newChat.GetComponent<ChatInfoManager>();
         chatInfoManager.chatInfoJSON = chatInfoJSON;
-        chatInfoManager.borderImage.sprite = Resources.Load<Sprite>("Image/BorderProfile/" + chatInfoJSON.borderProfile);
-        chatInfoManager.profileImage.sprite = Resources.Load<Sprite>("Image/ProfileImage/" + chatInfoJSON.profileImg);
+        chatInfoManager.borderImage.sprite = Resources.Load<Sprite>("image/borderProfile/" + chatInfoJSON.borderProfile);
+        chatInfoManager.profileImage.sprite = Resources.Load<Sprite>("image/profileImage/" + chatInfoJSON.profileImg);
         chatInfoManager.nicknameText.text = chatInfoJSON.nickname;
         chatInfoManager.levelText.text = "Lv. " + chatInfoJSON.level;
         chatInfoManager.msgText.text = chatInfoJSON.msg;
@@ -321,8 +321,8 @@ public class MainChatManager : MonoBehaviour
         GameObject newPrivateChat = Instantiate(Resources.Load<GameObject>("prefab/friend/FriendInfo_Friend"));
         FriendInfo_Friend friendInfoManager = newPrivateChat.GetComponent<FriendInfo_Friend>();
         friendInfoManager.friendInfoJSON.nickname = ChatInfoJSON.nickname;
-        friendInfoManager.borderImage.sprite = Resources.Load<Sprite>("Image/BorderProfile/" + ChatInfoJSON.borderProfile);
-        friendInfoManager.profileImage.sprite = Resources.Load<Sprite>("Image/ProfileImage/" + ChatInfoJSON.profileImg);
+        friendInfoManager.borderImage.sprite = Resources.Load<Sprite>("image/borderProfile/" + ChatInfoJSON.borderProfile);
+        friendInfoManager.profileImage.sprite = Resources.Load<Sprite>("image/profileImage/" + ChatInfoJSON.profileImg);
         friendInfoManager.nicknameText.text = ChatInfoJSON.nickname;
         friendInfoManager.levelText.text = ChatInfoJSON.level;
         newPrivateChat.transform.SetParent(privateChatList);

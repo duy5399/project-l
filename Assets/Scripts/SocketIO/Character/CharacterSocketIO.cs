@@ -26,6 +26,7 @@ public class CharacterSocketIO
             On_CharacterRotate(characterData);
         });
         SocketIO.instance.socketManager.Socket.On<string, string, float, bool>("character-trig-anim-success", (characterData, animName, animSpeed, force) => {
+            Debug.Log("character-trig-anim-success: " + animName);
             On_CharacterTrigAnim(characterData,animName, animSpeed, force);
         });
     }
@@ -37,7 +38,7 @@ public class CharacterSocketIO
         GameManager.instance.characterManager.myCharacter = chObj;
         ChBase chBase = chObj.GetComponent<ChBase>();
         chBase.isLocalPlayer = true;
-        GameManager.instance.joystick.SetActive(true);
+        chBase.category = ChBase.Category.Player;
         chBase.chMove.joystick = GameManager.instance.joystick.GetComponent<VirtualController>().joystick.GetComponent<FixedJoystick>();
     }
 
@@ -52,7 +53,7 @@ public class CharacterSocketIO
         GameManager.instance.characterManager.otherCharacter.Add(chObj);
         ChBase chBase = chObj.GetComponent<ChBase>();
         chBase.isLocalPlayer = false;
-
+        chBase.category = ChBase.Category.Player;
     }
 
     public void On_CharacterMove(string characterData)
@@ -88,6 +89,12 @@ public class CharacterSocketIO
     public void Emit_CharacterTrigAnim(string animName, float animSpeed = 1f, bool force = false)
     {
         SocketIO.instance.socketManager.Socket.Emit("character-trig-anim", animName, animSpeed, force);
+    }
+
+    //
+    public void Emit_TriggerNormalAttack()
+    {
+        SocketIO.instance.socketManager.Socket.Emit("trigger-normal-attack");
     }
     #endregion
 }

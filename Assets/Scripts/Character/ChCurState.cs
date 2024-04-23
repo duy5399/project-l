@@ -16,6 +16,12 @@ public class ChCurState : ChBase
     [SerializeField] private float _mountSpeed;
     [SerializeField] private float _characterSpeed;
 
+    [SerializeField] private bool _inCombat = false;
+    [SerializeField] private float _silenceTimeLeft = 0f;
+    [SerializeField] private float _attackDisableTimeLeft = 0f;
+    [SerializeField] private float _moveDisableTimeLeft = 0f;
+    [SerializeField] private float _slowMoveTimeLeft = 0f;
+
     public float moveSpeed
     {
         get { return _ridingMount == true ? _mountSpeed : _characterSpeed; }

@@ -60,6 +60,7 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.22f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\UI\HpIndicatorManager.cs" />
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\FixedJoystick.cs" />
     <Compile Include="Assets\Scripts\Friend\FriendInfo_AddFriend.cs" />
     <Compile Include="Assets\Scripts\Character\CharacterManager.cs" />
@@ -68,18 +69,24 @@
     <Compile Include="Assets\Scripts\SocketIO\Character\CharacterSocketIO.cs" />
     <Compile Include="Assets\Scripts\Character\Animation\AnimManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
+    <Compile Include="Assets\Scripts\Character\Effect\EffectManager.cs" />
     <Compile Include="Assets\Scripts\Account\ForgotPasswordManager.cs" />
+    <Compile Include="Assets\Scripts\Skill\SlotSetupSkill.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_ExampleScript_01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
+    <Compile Include="Assets\Scripts\Skill\SkillsManager.cs" />
     <Compile Include="Assets\Scripts\Character\CharacterDataJSON.cs" />
+    <Compile Include="Assets\Scripts\Skill\SkillNodeManager.cs" />
     <Compile Include="Assets\Scripts\Chat\MyChDataJSON.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\VariableJoystick.cs" />
+    <Compile Include="Assets\Scripts\Character\ChSkill.cs" />
     <Compile Include="Assets\Scripts\SocketIO\SocketIO.cs" />
     <Compile Include="Assets\Scripts\UI\LoadSceneManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\DropdownSample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexColorCycler.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
+    <Compile Include="Assets\Scripts\SocketIO\UI\UISocketIO.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
     <Compile Include="Assets\Scripts\Friend\FriendListManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
@@ -89,14 +96,18 @@
     <Compile Include="Assets\Scripts\Friend\FriendInfoJSON.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ChatController.cs" />
     <Compile Include="Assets\Scripts\Chat\MiniChatManager.cs" />
+    <Compile Include="Assets\Scripts\Skill\SkillSpawnerManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ObjectSpin.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_PhoneNumberValidator.cs" />
+    <Compile Include="Assets\Scripts\Skill\SkillBaseJSON.cs" />
+    <Compile Include="Assets\Scripts\SocketIO\Skill\SkillSocketIO.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
     <Compile Include="Assets\Scripts\Character\ChMove.cs" />
     <Compile Include="Assets\Scripts\Character\JobClass\BasicClassJSON.cs" />
     <Compile Include="Assets\Scripts\Account\LoginManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_DigitValidator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_FrameRateCounter.cs" />
+    <Compile Include="Assets\Scripts\SocketIO\Character\Combat\CurrentStateSocketIO.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextConsoleSimulator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TeleType.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
@@ -118,7 +129,9 @@
     <Compile Include="Assets\Scripts\Account\LogoutManager.cs" />
     <Compile Include="Assets\Scripts\SocketIO\Account\LogoutSocketIO.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
+    <Compile Include="Assets\Scripts\UI\Hp\FloatingText.cs" />
     <Compile Include="Assets\Scripts\Friend\RequestAddFriendManager.cs" />
+    <Compile Include="Assets\Scripts\Skill\SetupSkillManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SkewTextExample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />
@@ -132,6 +145,9 @@
     <Compile Include="Assets\Scripts\Friend\FriendInfo_Friend.cs" />
     <Compile Include="Assets\Scripts\Chat\ChatInfoManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
+    <Compile Include="Assets\move.cs" />
+    <Compile Include="Assets\Scripts\Game\VirtualController\ActiveSkillButton.cs" />
+    <Compile Include="Assets\Scripts\Game\VirtualController\SkillButton.cs" />
     <Compile Include="Assets\Scripts\UI\UIManager.cs" />
     <Compile Include="Assets\Joystick Pack\Scripts\Base\Joystick.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
@@ -142,7 +158,8 @@
     <Compile Include="Assets\Scripts\SocketIO\Account\LoginSocketIO.cs" />
     <Compile Include="Assets\Scripts\Character\ChBase.cs" />
     <Compile Include="Assets\Scripts\Friend\FriendInfo_RequestAddFriend.cs" />
-    <Compile Include="Assets\Scripts\Character\Efect\EffectManager.cs" />
+    <Compile Include="Assets\Scripts\Skill\SkillInfoManager.cs" />
+    <Compile Include="Assets\Scripts\Game\VirtualController\NormalAttackButton.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
     <Compile Include="Assets\Scripts\DontDestroyOnLoad\DontDestroyOnLoad.cs" />
   </ItemGroup>

@@ -354,7 +354,9 @@ public class CharacterManager : MonoBehaviour
     public void CharacterTrigAnim(string characterData, string animName, float animSpeed, bool force)
     {
         CharacterDataJSON characterDataJSON = JsonConvert.DeserializeObject<CharacterDataJSON>(characterData);
-        GameObject chObj = otherCharacter.FirstOrDefault(x => x.name == characterDataJSON.nickname);
+        List<GameObject> temp = new List<GameObject>(otherCharacter);
+        temp.Add(myCharacter);
+        GameObject chObj = temp.FirstOrDefault(x => x.name == characterDataJSON.nickname);
         if (chObj == null)
         {
             return;

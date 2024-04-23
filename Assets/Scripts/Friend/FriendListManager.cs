@@ -51,7 +51,7 @@ public class FriendListManager : MonoBehaviour
 
     void Start()
     {
-        GetFriendList();
+        //GetFriendList();
     }
 
     // Update is called once per frame
@@ -60,7 +60,7 @@ public class FriendListManager : MonoBehaviour
         
     }
 
-    void GetFriendList()
+    public void GetFriendList()
     {
         SocketIO.instance.friendSocketIO.Emit_GetFriendList();
     }
@@ -107,8 +107,8 @@ public class FriendListManager : MonoBehaviour
         GameObject friendObj = Instantiate(Resources.Load<GameObject>("prefab/friend/FriendInfo_Friend"));
         FriendInfo_Friend friendInfoManager = friendObj.GetComponent<FriendInfo_Friend>();
         friendInfoManager.friendInfoJSON = friendInfoJSON;
-        friendInfoManager.borderImage.sprite = Resources.Load<Sprite>("Image/BorderProfile/" + friendInfoJSON.borderProfile);
-        friendInfoManager.profileImage.sprite = Resources.Load<Sprite>("Image/ProfileImage/" + friendInfoJSON.profileImg);
+        friendInfoManager.borderImage.sprite = Resources.Load<Sprite>("image/borderProfile/" + friendInfoJSON.borderProfile);
+        friendInfoManager.profileImage.sprite = Resources.Load<Sprite>("image/profileImage/" + friendInfoJSON.profileImg);
         friendInfoManager.nicknameText.text = friendInfoJSON.nickname;
         friendInfoManager.levelText.text = friendInfoJSON.level;
         friendInfoManager.stateOnlineText.text = friendInfoJSON.isOnline == true ? "#Online" : "#Offline";

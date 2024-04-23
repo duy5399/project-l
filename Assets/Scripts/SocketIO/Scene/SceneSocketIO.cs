@@ -16,7 +16,6 @@ public class SceneSocketIO
 
     private void On_LoadScene(string scene)
     {
-        Debug.Log("On_LoadScene");
         UIManager.instance.loadSceneManager.LoadScene(scene, () => {
             GameManager.instance.characterManager.otherCharacter.Clear();
             SocketIO.instance.socketManager.Socket.Emit("get-other-character-in-map");

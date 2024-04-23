@@ -17,6 +17,9 @@ public class SocketIO : MonoBehaviour
     [SerializeField] private ChatSocketIO _chatSocketIO;
     [SerializeField] private FriendSocketIO _friendSocketIO;
     [SerializeField] private SceneSocketIO _sceneSocketIO;
+    [SerializeField] private SkillSocketIO _skillSocketIO;
+    [SerializeField] private UISocketIO _uiSocketIO;
+    [SerializeField] private CurrentStateSocketIO _currentStateSocketIO;
 
     public LoginSocketIO loginSocketIO
     {
@@ -47,6 +50,20 @@ public class SocketIO : MonoBehaviour
         get { return _sceneSocketIO; }
     }
 
+    public SkillSocketIO skillSocketIO
+    {
+        get { return _skillSocketIO; }
+    }
+    public CurrentStateSocketIO currentStateSocketIO
+    {
+        get { return _currentStateSocketIO; }
+    }
+
+    public UISocketIO uiSocketIO
+    {
+        get { return _uiSocketIO; }
+    }
+
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -64,6 +81,9 @@ public class SocketIO : MonoBehaviour
         _chatSocketIO = new ChatSocketIO();
         _friendSocketIO = new FriendSocketIO();
         _sceneSocketIO = new SceneSocketIO();
+        _skillSocketIO = new SkillSocketIO();
+        _currentStateSocketIO = new CurrentStateSocketIO();
+        _uiSocketIO = new UISocketIO();
     }
 
     void Start()
@@ -81,6 +101,9 @@ public class SocketIO : MonoBehaviour
         _chatSocketIO.ChatSocketIOStart();
         _friendSocketIO.FriendSocketIOStart();
         _sceneSocketIO.SceneSocketIOStart();
+        _skillSocketIO.SkillSocketIOStart();
+        _currentStateSocketIO.CurrentStateSocketIOStart();
+        _uiSocketIO.UISocketIOStart();
     }
 
     // Update is called once per frame
