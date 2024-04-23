@@ -42,7 +42,11 @@ public class RequestAddFriendManager : MonoBehaviour
     }
     void Start()
     {
+<<<<<<< HEAD
+        //GetRequestAddFriendList();
+=======
         GetRequestAddFriendList();
+>>>>>>> fe0eb62cff20252f9182d96088b832c039117485
     }
 
     // Update is called once per frame
@@ -50,7 +54,11 @@ public class RequestAddFriendManager : MonoBehaviour
     {
         
     }
+<<<<<<< HEAD
+    public void GetRequestAddFriendList()
+=======
     void GetRequestAddFriendList()
+>>>>>>> fe0eb62cff20252f9182d96088b832c039117485
     {
         SocketIO.instance.friendSocketIO.Emit_GetRequestAddFriendList();
     }
@@ -67,11 +75,19 @@ public class RequestAddFriendManager : MonoBehaviour
 
     public void NewRequestAddFriend(FriendInfoJSON infoRequesterJSON)
     {
+<<<<<<< HEAD
         GameObject requestObj = Instantiate(Resources.Load<GameObject>("prefab/friend/FriendInfo_RequestAddFriend"));
+        FriendInfo_RequestAddFriend friendInfoManager = requestObj.GetComponent<FriendInfo_RequestAddFriend>();
+        friendInfoManager.friendInfoJSON = infoRequesterJSON;
+        friendInfoManager.borderImage.sprite = Resources.Load<Sprite>("image/borderProfile/" + infoRequesterJSON.borderProfile);
+        friendInfoManager.profileImage.sprite = Resources.Load<Sprite>("image/profileImage/" + infoRequesterJSON.profileImg);
+=======
+        GameObject requestObj = Instantiate(Resources.Load<GameObject>("Prefab/Friend/FriendInfo_RequestAddFriend"));
         FriendInfo_RequestAddFriend friendInfoManager = requestObj.GetComponent<FriendInfo_RequestAddFriend>();
         friendInfoManager.friendInfoJSON = infoRequesterJSON;
         friendInfoManager.borderImage.sprite = Resources.Load<Sprite>("Image/BorderProfile/" + infoRequesterJSON.borderProfile);
         friendInfoManager.profileImage.sprite = Resources.Load<Sprite>("Image/ProfileImage/" + infoRequesterJSON.profileImg);
+>>>>>>> fe0eb62cff20252f9182d96088b832c039117485
         friendInfoManager.nicknameText.text = infoRequesterJSON.nickname;
         friendInfoManager.levelText.text = infoRequesterJSON.level;
         requestObj.transform.SetParent(requestListScrollRect.content);

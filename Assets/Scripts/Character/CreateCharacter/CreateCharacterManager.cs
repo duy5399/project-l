@@ -170,7 +170,7 @@ public class CreateCharacterManager : MonoBehaviour
         BasicClassJSON basicClassJSON = basicClass.ToList().FirstOrDefault(x => x.class_id == class_id);
         if (basicClassJSON != null)
         {
-            mainClass.sprite = Resources.Load<Sprite>("Image/Icon/Class/" + basicClassJSON.class_id);
+            mainClass.sprite = Resources.Load<Sprite>("image/icon/class/" + basicClassJSON.class_id);
             mainClass.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = basicClassJSON.class_name;
             for(int i = 0; i < basicClassJSON.class_subclasses.Count(); i++)
             {
@@ -179,7 +179,7 @@ public class CreateCharacterManager : MonoBehaviour
                 {
                     if(i == 0)
                     {
-                        subClass1Button.image.sprite = Resources.Load<Sprite>("Image/Icon/Class/" + jobJSON.job_id);
+                        subClass1Button.image.sprite = Resources.Load<Sprite>("image/icon/class/" + jobJSON.job_id);
                         subClass1Button.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = jobJSON.job_name;
                         subClass1Button.onClick.RemoveAllListeners();
                         subClass1Button.onClick.AddListener(() =>
@@ -190,7 +190,7 @@ public class CreateCharacterManager : MonoBehaviour
                     }
                     else if (i == 1)
                     {
-                        subClass2Button.image.sprite = Resources.Load<Sprite>("Image/Icon/Class/" + jobJSON.job_id);
+                        subClass2Button.image.sprite = Resources.Load<Sprite>("image/icon/class/" + jobJSON.job_id);
                         subClass2Button.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = jobJSON.job_name;
                         subClass2Button.onClick.RemoveAllListeners();
                         subClass2Button.onClick.AddListener(() =>

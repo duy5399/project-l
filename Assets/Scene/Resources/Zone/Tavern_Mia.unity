@@ -552,11 +552,11 @@ GameObject:
   - component: {fileID: 1573458507}
   m_Layer: 0
   m_Name: Camera
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!81 &1573458507
 AudioListener:
   m_ObjectHideFlags: 0
@@ -717,13 +717,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb53b4901af563a4bb1c41cab9b45638, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isLocalPlayer: 0
-  rb: {fileID: 0}
-  boxCollider: {fileID: 0}
-  chCurState: {fileID: 0}
-  _chAnim: {fileID: 0}
-  _chMove: {fileID: 0}
+  chBase: {fileID: 0}
   joystick: {fileID: 0}
+  autoMoveToTarget: 0
+  distanceWithTarget: 0
 --- !u!114 &1700320782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -736,15 +733,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4cfd8155f571dd49bc752e38f98d2aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isLocalPlayer: 0
+  isLocalPlayer: 0
+  category: 0
   rb: {fileID: 0}
   boxCollider: {fileID: 0}
   chCurState: {fileID: 0}
-  _chAnim: {fileID: 0}
-  _chMove: {fileID: 0}
+  chAnim: {fileID: 0}
+  chMove: {fileID: 0}
+  chSkill: {fileID: 0}
   _ridingMount: 0
   _mountSpeed: 0
   _characterSpeed: 0
+  _inCombat: 0
+  _silenceTimeLeft: 0
+  _attackDisableTimeLeft: 0
+  _moveDisableTimeLeft: 0
+  _slowMoveTimeLeft: 0
 --- !u!114 &1700320783
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -757,12 +761,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c49781ebbf9b7f14490f732f8857d506, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isLocalPlayer: 0
+  isLocalPlayer: 0
+  category: 0
   rb: {fileID: 0}
   boxCollider: {fileID: 0}
   chCurState: {fileID: 0}
-  _chAnim: {fileID: 0}
-  _chMove: {fileID: 0}
+  chAnim: {fileID: 0}
+  chMove: {fileID: 0}
+  chSkill: {fileID: 0}
 --- !u!1 &1913068562
 GameObject:
   m_ObjectHideFlags: 0

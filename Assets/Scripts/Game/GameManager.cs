@@ -14,8 +14,10 @@ public class GameManager : MonoBehaviour
     public static GameManager instance { get; private set; }
 
     public GameObject mainCamera;
-    public GameObject panelUILoading;
+    public GameObject ui_loading;
     public GameObject joystick;
+    public GameObject ui_feature;
+    public GameObject ui_currentState;
 
     public CharacterManager characterManager;
 
@@ -36,8 +38,15 @@ public class GameManager : MonoBehaviour
         joystick = Instantiate(joystickPath);
         joystick.SetActive(false);
         //
-        GameObject panelUILoadingPath = Resources.Load<GameObject>("prefab/ui/Canvas - UILoading");
-        panelUILoading = Instantiate(panelUILoadingPath);
+        GameObject ui_loadingPath = Resources.Load<GameObject>("prefab/ui/Canvas - UILoading");
+        ui_loading = Instantiate(ui_loadingPath);
+        //
+        GameObject ui_featurePath = Resources.Load<GameObject>("prefab/ui/Canvas - UI Feature");
+        ui_feature = Instantiate(ui_featurePath);
+        ui_feature.SetActive(false);
+        //
+        GameObject ui_currentStatePath = Resources.Load<GameObject>("prefab/ui/Canvas - UI CurrentState");
+        ui_currentState = Instantiate(ui_currentStatePath);
 
         characterManager = this.AddComponent<CharacterManager>();
     }
@@ -56,5 +65,10 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         func();
+    }
+
+    public void RepeatEvery(float delay, float interval,  Action func)
+    {
+
     }
 }

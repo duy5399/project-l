@@ -27,6 +27,7 @@ public class ChAnim : AnimManager
 
     public override void TriggerAnim(string animName, float animSpeed = 1f, bool force = false)
     {
+        Debug.Log("TriggerAnim: " + animName + " - " + animSpeed);
         if ((animName == "std" && _status == Status.std) || 
             (animName == "run_std" && _status == Status.run_std) || 
             (animName == "astd" && _status == Status.astd) || 
@@ -75,7 +76,8 @@ public class ChAnim : AnimManager
             animator.ResetTrigger("dizzy");
             animator.ResetTrigger("gathering");
             _status = Status.std;
-            animSpeed = 1f;
+            animator.speed = 1f;
+            this.animSpeed = 1f;
             //InterruptNowAnim();
         }
         else
@@ -87,15 +89,12 @@ public class ChAnim : AnimManager
         this.animSpeed = animSpeed;
         if (force)
         {
+            Debug.Log("TriggerAnim: " + animName + " - " + animator.speed);
             animator.Play(animName);
         }
         else
         {
             animator.SetTrigger(animName);
-        }
-        if (chBase.isLocalPlayer)
-        {
-            SocketIO.instance.characterSocketIO.Emit_CharacterTrigAnim(animName, animSpeed, force);
         }
     }
 

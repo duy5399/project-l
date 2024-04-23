@@ -86,7 +86,11 @@ public class AddFriendManager : MonoBehaviour
             }
             else
             {
+<<<<<<< HEAD
                 friendObj = Instantiate(Resources.Load<GameObject>("prefab/friend/FriendInfo_AddFriend"));
+=======
+                friendObj = Instantiate(Resources.Load<GameObject>("Prefab/Friend/FriendInfo_AddFriend"));
+>>>>>>> fe0eb62cff20252f9182d96088b832c039117485
                 friendObj.transform.SetParent(searchFriendListScrollRect.content);
                 friendObj.transform.localScale = Vector3.one;
                 displayList.Add(friendObj);
@@ -95,8 +99,13 @@ public class AddFriendManager : MonoBehaviour
             friendInfoManager.friendInfoJSON = searchFriendListJSON[i];
             friendInfoManager.nicknameText.text = searchFriendListJSON[i].nickname;
             friendInfoManager.levelText.text = searchFriendListJSON[i].level;
+<<<<<<< HEAD
+            friendInfoManager.borderImage.sprite = Resources.Load<Sprite>("image/borderProfile/" + searchFriendListJSON[i].borderProfile);
+            friendInfoManager.profileImage.sprite = Resources.Load<Sprite>("image/profileImage/" + searchFriendListJSON[i].profileImg);
+=======
             friendInfoManager.borderImage.sprite = Resources.Load<Sprite>("Image/BorderProfile/" + searchFriendListJSON[i].borderProfile);
             friendInfoManager.profileImage.sprite = Resources.Load<Sprite>("Image/ProfileImage/" + searchFriendListJSON[i].profileImg);
+>>>>>>> fe0eb62cff20252f9182d96088b832c039117485
             count++;
         }
         for (int i = count; i < displayList.Count; i++)

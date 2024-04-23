@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 808198024568691539}
   - component: {fileID: 1914469483155391713}
   - component: {fileID: 3861052117740240851}
+  - component: {fileID: 4967830803679200003}
   m_Layer: 12
   m_Name: Character
   m_TagString: Untagged
@@ -110,12 +111,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c49781ebbf9b7f14490f732f8857d506, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isLocalPlayer: 0
+  isLocalPlayer: 0
+  category: 0
   rb: {fileID: 0}
   boxCollider: {fileID: 0}
   chCurState: {fileID: 0}
   chAnim: {fileID: 0}
-  _chMove: {fileID: 0}
+  chMove: {fileID: 0}
+  chSkill: {fileID: 0}
 --- !u!114 &808198024568691539
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,15 +131,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4cfd8155f571dd49bc752e38f98d2aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isLocalPlayer: 0
+  isLocalPlayer: 0
+  category: 0
   rb: {fileID: 0}
   boxCollider: {fileID: 0}
   chCurState: {fileID: 0}
   chAnim: {fileID: 0}
-  _chMove: {fileID: 0}
+  chMove: {fileID: 0}
+  chSkill: {fileID: 0}
   _ridingMount: 0
   _mountSpeed: 0
   _characterSpeed: 0
+  _inCombat: 0
+  _silenceTimeLeft: 0
+  _attackDisableTimeLeft: 0
+  _moveDisableTimeLeft: 0
+  _slowMoveTimeLeft: 0
 --- !u!114 &1914469483155391713
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,13 +159,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb53b4901af563a4bb1c41cab9b45638, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isLocalPlayer: 0
-  rb: {fileID: 0}
-  boxCollider: {fileID: 0}
-  chCurState: {fileID: 808198024568691539}
-  chAnim: {fileID: 0}
-  _chMove: {fileID: 0}
+  chBase: {fileID: 0}
   joystick: {fileID: 0}
+  autoMoveToTarget: 0
+  distanceWithTarget: 0
 --- !u!114 &3861052117740240851
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -168,12 +175,47 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7587fe6373295924eb4daef6bdf59c3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isLocalPlayer: 0
-  rb: {fileID: 0}
-  boxCollider: {fileID: 0}
-  chCurState: {fileID: 0}
-  chAnim: {fileID: 0}
-  _chMove: {fileID: 0}
   _animator: {fileID: 0}
-  _status: 0
   animSpeed: 1
+  chBase: {fileID: 0}
+  _status: 0
+  animCtrl: {fileID: 0}
+  mountAnimCtrl: {fileID: 0}
+--- !u!114 &4967830803679200003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1167721594870293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e289e0a3261503941aa68193626f13a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chBase: {fileID: 0}
+  target: {fileID: 0}
+  currentCasting:
+    skill_id: 
+    skill_name: 
+    skill_use_type: 0
+    is_normal_attack: 0
+    description: 
+    max_level: 0
+    skill_target_type: 0
+    distance: 0
+    can_be_silenced: 0
+    can_interrupt: 0
+    can_move_when_casting: 0
+    can_crit: 0
+    skill_animName: 
+    cast_head_time: 0
+    casting_time: 0
+    cast_back_time: 0
+    scale_animSpeed: 0
+    channel_time: 0
+    level_require: 0
+    skill_require: 
+    class_require: []
+    display_id: 0
+  locked: 0
