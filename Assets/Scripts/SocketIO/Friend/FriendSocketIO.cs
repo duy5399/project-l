@@ -25,8 +25,8 @@ public class FriendSocketIO
             On_FindFriendFail();
         });
         //gửi lời mời kết bạn
-        SocketIO.instance.socketManager.Socket.On<string>("add-friend-success", (nickname) => {
-            On_AddFriendSuccess(nickname);
+        SocketIO.instance.socketManager.Socket.On<string>("add-friend-success", (uid) => {
+            On_AddFriendSuccess(uid);
         });
         SocketIO.instance.socketManager.Socket.On("add-friend-fail", () => {
             On_AddFriendFail();
@@ -43,15 +43,15 @@ public class FriendSocketIO
             On_GetRequestAddFriendListFail();
         });
         //đồng ý kết bạn
-        SocketIO.instance.socketManager.Socket.On<string>("accept-friend-success", (nickname) => {
-            On_AcceptFriendSuccess(nickname);
+        SocketIO.instance.socketManager.Socket.On<string>("accept-friend-success", (uid) => {
+            On_AcceptFriendSuccess(uid);
         });
         SocketIO.instance.socketManager.Socket.On("add-friend-fail", () => {
             On_AcceptFriendFail();
         });
         //không đồng ý kết bạn
-        SocketIO.instance.socketManager.Socket.On<string>("decline-friend-success", (nickname) => {
-            On_DeclineFriendSuccess(nickname);
+        SocketIO.instance.socketManager.Socket.On<string>("decline-friend-success", (uid) => {
+            On_DeclineFriendSuccess(uid);
         });
         SocketIO.instance.socketManager.Socket.On("decline-friend-fail", () => {
             On_DeclineFriendFail();
@@ -87,10 +87,10 @@ public class FriendSocketIO
     }
 
     //thêm bạn
-    void On_AddFriendSuccess(string nickname)
+    void On_AddFriendSuccess(string uid)
     {
         UIManager.instance.loading01Panel.gameObject.SetActive(false);
-        AddFriendManager.instance.AddFriendSuccess(nickname);
+        AddFriendManager.instance.AddFriendSuccess(uid);
     }
     void On_AddFriendFail()
     {
@@ -117,10 +117,10 @@ public class FriendSocketIO
     }
 
     //đồng ý kết bạn
-    void On_AcceptFriendSuccess(string nickname)
+    void On_AcceptFriendSuccess(string uid)
     {
         UIManager.instance.loading01Panel.gameObject.SetActive(false);
-        RequestAddFriendManager.instance.AcceptFriendSuccess(nickname);
+        RequestAddFriendManager.instance.AcceptFriendSuccess(uid);
     }
     void On_AcceptFriendFail()
     {
@@ -128,10 +128,10 @@ public class FriendSocketIO
         UIManager.instance.loading01Panel.gameObject.SetActive(false);
     }
     //không đồng ý kết bạn
-    void On_DeclineFriendSuccess(string nickname)
+    void On_DeclineFriendSuccess(string uid)
     {
         UIManager.instance.loading01Panel.gameObject.SetActive(false);
-        RequestAddFriendManager.instance.DeclineFriendSuccess(nickname);
+        RequestAddFriendManager.instance.DeclineFriendSuccess(uid);
     }
     void On_DeclineFriendFail()
     {
@@ -155,21 +155,21 @@ public class FriendSocketIO
     {
         SocketIO.instance.socketManager.Socket.Emit("request-find-friend", nickname);
     }
-    public void Emit_RequestAddFriend(string nickname)
+    public void Emit_RequestAddFriend(string uid)
     {
-        SocketIO.instance.socketManager.Socket.Emit("request-add-friend", nickname);
+        SocketIO.instance.socketManager.Socket.Emit("request-add-friend", uid);
     }
     public void Emit_GetRequestAddFriendList()
     {
         SocketIO.instance.socketManager.Socket.Emit("get-request-add-friend-list");
     }
-    public void Emit_AcceptRequestAddFriend(string nickname)
+    public void Emit_AcceptRequestAddFriend(string uid)
     {
-        SocketIO.instance.socketManager.Socket.Emit("accept-request-add-friend", nickname);
+        SocketIO.instance.socketManager.Socket.Emit("accept-request-add-friend", uid);
     }
-    public void Emit_DeclineRequestAddFriend(string nickname)
+    public void Emit_DeclineRequestAddFriend(string uid)
     {
-        SocketIO.instance.socketManager.Socket.Emit("decline-request-add-friend", nickname);
+        SocketIO.instance.socketManager.Socket.Emit("decline-request-add-friend", uid);
     }
     #endregion
 }

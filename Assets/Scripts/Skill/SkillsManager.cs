@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,12 +12,12 @@ public class SkillsManager : MonoBehaviour
 {
     public static SkillsManager instance { get; private set; }
 
-    [SerializeField] private Image backgroundImg;
-    [SerializeField] private ScrollRect skillTree;
+    public Image backgroundImg;
+    public ScrollRect skillTree;
     public SkillInfoManager skillInfo;
-    public SetupSkillManager setupSkill;
-    [SerializeField] private Button closeBtn;
-    public List<GameObject> skillList;
+    public EquipSkills equipSkills;
+    public Button closeBtn;
+    public List<GameObject> skillNodeLst;
     public int curPoint;
     public int tempPoint;
 
@@ -34,9 +34,11 @@ public class SkillsManager : MonoBehaviour
         backgroundImg = this.transform.GetChild(0).GetComponent<Image>();
         skillTree = this.transform.GetChild(1).GetComponent<ScrollRect>();
         skillInfo = this.transform.GetChild(2).GetComponent<SkillInfoManager>();
-        setupSkill = this.transform.GetChild(3).GetComponent<SetupSkillManager>();
+        equipSkills = this.transform.GetChild(3).GetComponent<EquipSkills>();
         closeBtn = this.transform.GetChild(5).GetComponent<Button>();
-        skillList = new List<GameObject>();
+        skillNodeLst = new List<GameObject>();
+        equipSkills.Init();
+        this.gameObject.SetActive(false);
     }
 
     private void OnEnable()
@@ -51,107 +53,121 @@ public class SkillsManager : MonoBehaviour
 
     void Start()
     {
-        //GetSkills();
+        
     }
 
-    // Update is called once per frame
     void Update()
     {
         
     }
 
-    public void GetSkills()
+    /// <summary>
+    /// Hiển thị thông tin bảng kỹ năng của nhân vật
+    /// </summary>
+    /// <param name="skills1">Danh sách kỹ năng</param>
+    /// <param name="skills2">Danh sách kỹ năng đã học</param>
+    /// <param name="job">Nghề nghiệp</param>
+    public void DisplaySkillTree(string skills1, string skills2, string job)
     {
-        SocketIO.instance.skillSocketIO.Emit_GetSkills();
-    }
-
-    public void DisplaySkillTree(string skills, string mySkills, string job)
-    {
-        Debug.Log(mySkills);
-        VirtualController virtualController = GameManager.instance.joystick.GetComponent<VirtualController>();
+        VirtualController playerController = GameManager.instance.joystick.GetComponent<VirtualController>();
         switch (job)
         {
             case "class_1_1_1":
             case "class_1_2_1":
                 backgroundImg.color = new Color32(201, 98, 94, 255);
                 backgroundImg.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("image/icon/class/icon-swordsman 1");
-                virtualController.normalAttackBtn.transform.GetChild(4).GetComponent<Image>().sprite = Resources.Load<Sprite>("image/button/katana");
+                playerController.normalAttackBtn.transform.GetChild(4).GetComponent<Image>().sprite = Resources.Load<Sprite>("image/button/katana");
                 break;
             case "class_2_1_1":
             case "class_2_2_1":
                 backgroundImg.color = new Color32(88, 124, 171, 255);
                 backgroundImg.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("image/icon/class/icon-mage 1");
-                virtualController.normalAttackBtn.transform.GetChild(4).GetComponent<Image>().sprite = Resources.Load<Sprite>("image/button/bow");
+                playerController.normalAttackBtn.transform.GetChild(4).GetComponent<Image>().sprite = Resources.Load<Sprite>("image/button/wand");
                 break;
             case "class_3_1_1":
             case "class_3_2_1":
                 backgroundImg.color = new Color32(124, 141, 49, 255);
                 backgroundImg.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("image/icon/class/icon-archer 1");
-                virtualController.normalAttackBtn.transform.GetChild(4).GetComponent<Image>().sprite = Resources.Load<Sprite>("image/button/wand");
+                playerController.normalAttackBtn.transform.GetChild(4).GetComponent<Image>().sprite = Resources.Load<Sprite>("image/button/bow");
                 break;
         }
-        SkillBaseJSON[] skillBaseJSON = JsonConvert.DeserializeObject<SkillBaseJSON[]>(skills);
-        MySkillsDataJSON mySkillDataJSON = JsonConvert.DeserializeObject<MySkillsDataJSON>(mySkills);
-        curPoint = mySkillDataJSON.curPoint;
-        tempPoint = curPoint;
+        SkillBase[] skillBaseLst = JsonConvert.DeserializeObject<SkillBase[]>(skills1);
         GameObject skillNodePrefab = Resources.Load<GameObject>("prefab/skills/SkillNode");
-        for (int i = 0; i < skillBaseJSON.Length; i++)
+        for (int i = 0; i < skillBaseLst.Length; i++)
         {
-            if (skillBaseJSON[i].display_id == -1 && skillBaseJSON[i].is_normal_attack)
+            if (skillBaseLst[i].display_id == -1 && skillBaseLst[i].is_normal_attack)
             {
-                virtualController.normalAttackBtn.GetComponent<NormalAttackButton>().skillBaseJSON = skillBaseJSON[i];
+                playerController.normalAttackBtn.GetComponent<NormalAttackButton>().skillBase = skillBaseLst[i];
                 continue;
             }
-            while(skillList.Count < skillBaseJSON[i].display_id)
+            //Thêm Empty object
+            while(skillNodeLst.Count < skillBaseLst[i].display_id)
             {
                 GameObject emptyObj = Instantiate(new GameObject("SkillNodeEmpty", typeof(RectTransform)), skillTree.content);
-                skillList.Add(emptyObj);
+                skillNodeLst.Add(emptyObj);
             }
-            GameObject skillNodeObj = Instantiate(skillNodePrefab, skillTree.content);
-            skillNodeObj.name = "Skill_" + skillBaseJSON[i].skill_id;
-            SkillNodeManager skillNode = skillNodeObj.GetComponent<SkillNodeManager>();
-            skillNode.skillBaseJSON = skillBaseJSON[i];
-            skillNode.skillName.text = skillBaseJSON[i].skill_name;
-            skillNode.skillIcon.sprite = Resources.Load<Sprite>("image/skill/icon/" + skillBaseJSON[i].skill_id);
-            skillNode.skillBorder.sprite = Resources.Load<Sprite>(skillBaseJSON[i].skill_use_type == SkillUseType.Passive ? "image/skill/border/ui_border_skill_passsive_00" : "image/border/ui_border_skill_active_00");
-            SkillLearn mySkillCheck = mySkillDataJSON.skills.FirstOrDefault(x => x.skill_id == skillBaseJSON[i].skill_id);
-            if (mySkillCheck != null)
+            GameObject skillNodeObj = Instantiate(skillNodePrefab);
+            skillNodeObj.name = "Skill_" + skillBaseLst[i].skill_id;
+            SkillNode skillNode = skillNodeObj.GetComponent<SkillNode>();
+            skillNode.skillBase = skillBaseLst[i];
+            Debug.Log("skillBaseLst[i].skill_name: " + skillBaseLst[i].skill_name);
+            skillNode.skillName.text = skillBaseLst[i].skill_name;
+            skillNode.skillIcon.sprite = Resources.Load<Sprite>("image/skill/icon/" + skillBaseLst[i].skill_icon);
+            skillNode.skillBorder.sprite = Resources.Load<Sprite>(skillBaseLst[i].skill_use_type == "Passive" ? "image/skill/border/ui_border_skill_passsive_00" : "image/skill/border/ui_border_skill_active_00");
+            skillNode.skillLv.text = "0/" + skillBaseLst[i].max_level;
+            skillNodeObj.transform.parent = skillTree.content;
+            skillNodeObj.transform.localScale = Vector3.one;
+            skillNodeLst.Add(skillNodeObj);
+        }
+        //Xử lý thông tin kỹ năng đã học
+        MySkills mySkills = JsonConvert.DeserializeObject<MySkills>(skills2);
+        curPoint = mySkills.curPoint;
+        tempPoint = mySkills.curPoint;
+        for (int i = 0; i < mySkills.skills.Count(); i++)
+        {
+            GameObject skillNodeObj = skillNodeLst.FirstOrDefault(x => x.GetComponent<SkillNode>() != null && x.GetComponent<SkillNode>().skillBase.skill_id == mySkills.skills[i].skill_id);
+            if (!skillNodeObj)
             {
-                skillNode.curLv = mySkillCheck.level;
-                skillNode.tempLv = mySkillCheck.level;
-                if(mySkillCheck.slot >= 0)
-                {
-                    setupSkill.skillButtonList[mySkillCheck.slot].skillBaseJSON = skillBaseJSON[i];
-                    setupSkill.skillButtonList[mySkillCheck.slot].skillIconImg.sprite = Resources.Load<Sprite>("image/skill/icon/" + skillBaseJSON[i].skill_id);
-                    virtualController.skillButtons[mySkillCheck.slot].GetComponent<SkillButton>().skillBaseJSON = skillBaseJSON[i];
-                    virtualController.skillButtons[mySkillCheck.slot].GetComponent<SkillButton>().skillIconImg.sprite = Resources.Load<Sprite>("image/skill/icon/" + skillBaseJSON[i].skill_id);
-                    //virtualController.skillButtons[mySkillCheck.slot].GetComponent<SkillButton>().skillLvText.text = "Lv." + SkillsManager.instance.skillInfo.skillNodeManager.curLv;
-                }
+                continue;
             }
-            else
+            SkillNode skillNode = skillNodeObj.GetComponent<SkillNode>();
+            skillNode.curLv = mySkills.skills[i].level;
+            skillNode.tempLv = mySkills.skills[i].level;
+            skillNode.skillLv.text = mySkills.skills[i].level + "/" + skillNode.skillBase.max_level;
+            if (mySkills.skills[i].equip_slot < 0)
             {
-                skillNode.curLv = 0;
-                skillNode.tempLv = 0;
+                continue;
             }
-            skillNode.skillLv.text = skillNode.tempLv + "/" + skillNode.skillBaseJSON.max_level;
-            skillList.Add(skillNodeObj);
+            int slot = mySkills.skills[i].equip_slot;
+            Debug.Log(slot);
+            equipSkills.skillLstBtn[slot].skillBase = skillNode.skillBase;
+            equipSkills.skillLstBtn[slot].skillIconImg.sprite = skillNode.skillIcon.sprite;
+            playerController.equipSkillLstBtn[slot].GetComponent<EquipSkillButton>().skillBase = skillNode.skillBase;
+            playerController.equipSkillLstBtn[slot].GetComponent<EquipSkillButton>().skillIconImg.sprite = skillNode.skillIcon.sprite;
+            //virtualController.skillButtons[mySkillCheck.slot].GetComponent<SkillButton>().skillLvText.text = "Lv." + SkillsManager.instance.skillInfo.skillNodeManager.curLv;
         }
     }
 
-    public void SaveSkillsSuccess(string newSkills)
+    /// <summary>
+    /// Lưu bảng kỹ năng thành công
+    /// </summary>
+    /// <param name="skills">Danh sách kỹ năng lưu thành công</param>
+    public void SaveSkillsSuccess(string skills)
     {
-        MySkillsDataJSON newSkillsDataJSON = JsonConvert.DeserializeObject<MySkillsDataJSON>(newSkills);
-        curPoint = newSkillsDataJSON.curPoint;
-        tempPoint = newSkillsDataJSON.curPoint;
-        foreach (var skill in newSkillsDataJSON.skills)
+        MySkills newSkills = JsonConvert.DeserializeObject<MySkills>(skills);
+        curPoint = newSkills.curPoint;
+        tempPoint = newSkills.curPoint;
+        foreach (var skill in newSkills.skills)
         {
-            GameObject skillObj = skillList.FirstOrDefault(x => x.GetComponent<SkillNodeManager>() != null && x.GetComponent<SkillNodeManager>().skillBaseJSON.skill_id == skill.skill_id);
-            if(skillObj != null)
+            GameObject skillNodeObj = skillNodeLst.FirstOrDefault(x => x.GetComponent<SkillNode>() != null && x.GetComponent<SkillNode>().skillBase.skill_id == skill.skill_id);
+            if (!skillNodeObj)
             {
-                skillObj.GetComponent<SkillNodeManager>().curLv = skill.level;
-                skillObj.GetComponent<SkillNodeManager>().tempLv = skill.level;
-                Debug.Log("SaveSkillsSuccess: " + skill.skill_id + " - " + skill.level);
+                continue;
             }
+            SkillNode skillNode = skillNodeObj.GetComponent<SkillNode>();
+            skillNode.curLv = skill.level;
+            skillNode.tempLv = skill.level;
+            Debug.Log("SaveSkillsSuccess: " + skill.skill_id + " - " + skill.level);
         }
     }
 
@@ -167,12 +183,12 @@ public class SkillsManager : MonoBehaviour
 }
 
 [Serializable]
-public class MySkillsDataJSON
+public class MySkills
 {
-    public int curPoint;
     public SkillLearn[] skills;
+    public int curPoint;
 
-    public MySkillsDataJSON(int curPoint, SkillLearn[] skills)
+    public MySkills(int curPoint, SkillLearn[] skills)
     {
         this.curPoint = curPoint;
         this.skills = skills;
@@ -183,13 +199,15 @@ public class MySkillsDataJSON
 public class SkillLearn
 {
     public string skill_id;
+    public string skill_use_type;
     public int level;
-    public int slot;
+    public int equip_slot;
 
-    public SkillLearn(string skill_id, int level, int slot)
+    public SkillLearn(string skill_id, string skill_use_type, int level, int equip_slot)
     {
         this.skill_id = skill_id;
+        this.skill_use_type = skill_use_type;
         this.level = level;
-        this.slot = slot;
+        this.equip_slot = equip_slot;
     }
 }

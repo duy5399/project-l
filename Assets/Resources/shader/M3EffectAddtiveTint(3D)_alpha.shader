@@ -14,9 +14,6 @@ SubShader {
    Color (0,0,0,0)
   }
   Blend SrcAlpha One
-    GLSLPROGRAM
-  #pragma vertex vert
-      #pragma fragment frag
 Program "vp" {
 SubProgram "gles " {
 "!!GLES
@@ -124,8 +121,6 @@ SubProgram "gles3 " {
 "!!GLES3"
 }
 }
- ENDGLSL
  }
 }
-Fallback "Diffuse"
 }

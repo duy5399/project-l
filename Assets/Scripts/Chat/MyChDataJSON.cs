@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class MyChDataJSON: CharacterDataJSON
+public class MyChDataJSON: BaseInfo
 {
     public long base_exp;
     public long base_exp_to_next_level;

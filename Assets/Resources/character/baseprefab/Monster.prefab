@@ -1,0 +1,430 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1249007369407323422
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7297348205588784811}
+  - component: {fileID: 1690678645972887064}
+  - component: {fileID: 1484621713346286291}
+  - component: {fileID: 7291605634272753533}
+  - component: {fileID: 2190117061610283231}
+  - component: {fileID: 6662980498174556943}
+  - component: {fileID: 3591387045280173519}
+  - component: {fileID: 4395622344920032087}
+  - component: {fileID: 3149967543318036290}
+  - component: {fileID: 1417362761257310551}
+  m_Layer: 0
+  m_Name: Monster
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7297348205588784811
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1249007369407323422}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1690678645972887064
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1249007369407323422}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!54 &1484621713346286291
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1249007369407323422}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 80
+  m_CollisionDetection: 0
+--- !u!114 &7291605634272753533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1249007369407323422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab0a410363236304eb84579c5273d036, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 0}
+  boxCollider: {fileID: 0}
+  audioSource: {fileID: 0}
+  chCurState: {fileID: 0}
+  chAnim: {fileID: 0}
+  chMove: {fileID: 0}
+  chSkill: {fileID: 0}
+  chEffect: {fileID: 0}
+  chWeakness: {fileID: 0}
+  mobInfo:
+    uid: 
+    level: 0
+    profileImg: 
+    data_location: 
+    data_position: []
+    data_rotation: []
+    category: 
+    monster_id: 
+    monster_name: 
+    data_stats:
+      p_atk: 0
+      m_atk: 0
+      hp: 0
+      max_hp: 0
+      sp: 0
+      max_sp: 0
+      p_def: 0
+      m_def: 0
+      p_pen: 0
+      m_pen: 0
+      aspd: 0
+      haste: 0
+      hit: 0
+      flee: 0
+      crit: 0
+      anti_crit: 0
+      crit_dmg: 0
+      anti_crit_dmg: 0
+      shield: 0
+      move_spd: 0
+      hp_regen_spd: 0
+      sp_regen_spd: 0
+      p_lifesteal: 0
+      m_lifesteal: 0
+      p_reflect: 0
+      m_reflect: 0
+      dead: 0
+      inCombat: 0
+    drop_list: 
+--- !u!114 &2190117061610283231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1249007369407323422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bec6d5ac5437d4e46969ed94f9adc96c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 0}
+  _status: 0
+  animSpeed: 1
+--- !u!114 &6662980498174556943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1249007369407323422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e289e0a3261503941aa68193626f13a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chBase: {fileID: 0}
+  target: {fileID: 0}
+  currentCasting:
+    skill_id: 
+    skill_name: 
+    skill_icon: 
+    skill_use_type: 0
+    is_normal_attack: 0
+    description: 
+    max_level: 0
+    skill_target_type: 0
+    skill_pos: 0
+    skill_logic:
+      logic: 0
+      skill_shape_type: 0
+      target_type: 0
+      shape_param: []
+      count: 0
+      interval: 0
+      max_hit_num: 0
+    distance: 0
+    can_be_silenced: 0
+    can_interrupt: 0
+    can_move_when_casting: 0
+    skill_animName: 
+    anim_effect: []
+    cast_head_time: 0
+    casting_time: 0
+    cast_back_time: 0
+    scale_animSpeed: 0
+    channel_time: 0
+    skill_info: []
+    level_require: 0
+    skill_require: 
+    class_require: []
+    display_id: 0
+  locked: 0
+--- !u!114 &3591387045280173519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1249007369407323422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4eeb61c0584b75f47b42f4c7d265605d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chBase: {fileID: 0}
+  effectLst:
+    _serializedList: []
+--- !u!82 &4395622344920032087
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1249007369407323422}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &3149967543318036290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1249007369407323422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d85e2ec5bdccfe042992e0d7c398550b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mobCurState: {fileID: 0}
+  mobAnim: {fileID: 0}
+  timeMove: 0
+  rangeRandomMove: 0
+  randomPosition: {x: 0, y: 0, z: 0}
+  getRandomPosition: 0
+--- !u!114 &1417362761257310551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1249007369407323422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb3ee995cbde71d48aa7a92835bfae20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stats:
+    p_atk: 0
+    m_atk: 0
+    hp: 0
+    max_hp: 0
+    sp: 0
+    max_sp: 0
+    p_def: 0
+    m_def: 0
+    p_pen: 0
+    m_pen: 0
+    aspd: 0
+    haste: 0
+    hit: 0
+    flee: 0
+    crit: 0
+    anti_crit: 0
+    crit_dmg: 0
+    anti_crit_dmg: 0
+    shield: 0
+    move_spd: 0
+    hp_regen_spd: 0
+    sp_regen_spd: 0
+    p_lifesteal: 0
+    m_lifesteal: 0
+    p_reflect: 0
+    m_reflect: 0
+    dead: 0
+    inCombat: 0
+  isTeleporting: 0
+  _silenceTimeLeft: 0
+  _attackDisableTimeLeft: 0
+  _moveDisableTimeLeft: 0
+  _slowMoveTimeLeft: 0
+  monsterInfo:
+    uid: 
+    level: 0
+    profileImg: 
+    data_location: 
+    data_position: []
+    data_rotation: []
+    category: 
+    monster_id: 
+    monster_name: 
+    data_stats:
+      p_atk: 0
+      m_atk: 0
+      hp: 0
+      max_hp: 0
+      sp: 0
+      max_sp: 0
+      p_def: 0
+      m_def: 0
+      p_pen: 0
+      m_pen: 0
+      aspd: 0
+      haste: 0
+      hit: 0
+      flee: 0
+      crit: 0
+      anti_crit: 0
+      crit_dmg: 0
+      anti_crit_dmg: 0
+      shield: 0
+      move_spd: 0
+      hp_regen_spd: 0
+      sp_regen_spd: 0
+      p_lifesteal: 0
+      m_lifesteal: 0
+      p_reflect: 0
+      m_reflect: 0
+      dead: 0
+      inCombat: 0
+    drop_list: 

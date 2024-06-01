@@ -8,7 +8,7 @@ public class VirtualController : MonoBehaviour
     public GameObject joystick;
     public Button normalAttackBtn;
     public Button changeComboSkillBtn;
-    public List<Button> skillButtons;
+    public List<Button> equipSkillLstBtn;
     private bool isComboSkill0;
 
     private void Awake()
@@ -16,10 +16,10 @@ public class VirtualController : MonoBehaviour
         joystick = transform.GetChild(0).gameObject;
         normalAttackBtn = transform.GetChild(2).GetComponent<Button>();
         changeComboSkillBtn = transform.GetChild(3).GetComponent<Button>();
-        skillButtons = new List<Button>();
+        equipSkillLstBtn = new List<Button>();
         for (int i = 4; i < 12; i++){
             Button skillBtn = transform.GetChild(i).GetComponent<Button>();
-            skillButtons.Add(skillBtn);
+            equipSkillLstBtn.Add(skillBtn);
             if(i > 7)
             {
                 skillBtn.gameObject.SetActive(false);
@@ -47,30 +47,30 @@ public class VirtualController : MonoBehaviour
     {
         if (isComboSkill0)
         {
-            for (int i = 0; i < skillButtons.Count; i++)
+            for (int i = 0; i < equipSkillLstBtn.Count; i++)
             {
                 if (i < 4)
                 {
-                    skillButtons[i].gameObject.SetActive(false);
+                    equipSkillLstBtn[i].gameObject.SetActive(false);
                 }
                 else
                 {
-                    skillButtons[i].gameObject.SetActive(true);
+                    equipSkillLstBtn[i].gameObject.SetActive(true);
                 }
             }
             isComboSkill0 = false;
         }
         else
         {
-            for (int i = 0; i < skillButtons.Count; i++)
+            for (int i = 0; i < equipSkillLstBtn.Count; i++)
             {
                 if (i < 4)
                 {
-                    skillButtons[i].gameObject.SetActive(true);
+                    equipSkillLstBtn[i].gameObject.SetActive(true);
                 }
                 else
                 {
-                    skillButtons[i].gameObject.SetActive(false);
+                    equipSkillLstBtn[i].gameObject.SetActive(false);
                 }
             }
             isComboSkill0 = true;

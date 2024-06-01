@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NormalAttackButton : SkillButton
+public class NormalAttackButton : EquipSkillButton
 {
     protected override void Awake()
     {

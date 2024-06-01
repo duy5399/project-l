@@ -83,7 +83,7 @@ public class FriendInfoManager : MonoBehaviour
     void OnClick_AddFriend()
     {
         UIManager.instance.loading01Panel.gameObject.SetActive(true);
-        SocketIO.instance.friendSocketIO.Emit_RequestAddFriend(friendInfoJSON.nickname);
+        SocketIO.instance.friendSocketIO.Emit_RequestAddFriend(friendInfoJSON.uid);
     }
 
 }

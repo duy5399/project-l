@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static MainChatManager;
 
 [Serializable]
 public class ChatSocketIO
@@ -10,39 +9,29 @@ public class ChatSocketIO
     #region On (lắng nghe sự kiện)
     public void ChatSocketIOStart()
     {
-        SocketIO.instance.socketManager.Socket.On("send-msg-fail", () => {
-            On_SendMsgFail();
-        });
+        //Gửi tin nhắn thành công
         SocketIO.instance.socketManager.Socket.On<string>("send-msg-success", (chatInfo) => {
-            On_SendMsgSuccess(chatInfo);
+            MiniChatManager.instance.DisplayMsg(chatInfo);
+            MainChatManager.instance.DisplayMsg(chatInfo, false);
         });
+        
+        //Gửi tin nhắn thất bại
+        SocketIO.instance.socketManager.Socket.On("send-msg-fail", () => {
+            Debug.Log("On_SendMsgFail");
+        });
+
+        //Nhận tin nhắn thành công
         SocketIO.instance.socketManager.Socket.On<string>("receive-msg-success", (chatInfo) => {
-            On_ReceiveMsgSuccess(chatInfo);
+            MiniChatManager.instance.DisplayMsg(chatInfo);
+            MainChatManager.instance.DisplayMsg(chatInfo, true);
         });
-    }
-
-    private void On_SendMsgFail()
-    {
-        Debug.Log("On_SendMsgFail");
-    }
-
-    private void On_SendMsgSuccess(string chatInfo)
-    {
-        MiniChatManager.instance.DisplayMsg(chatInfo);
-        MainChatManager.instance.DisplayMsg(chatInfo, false);
-    }
-
-    private void On_ReceiveMsgSuccess(string chatInfo)
-    {
-        MiniChatManager.instance.DisplayMsg(chatInfo);
-        MainChatManager.instance.DisplayMsg(chatInfo, true);
     }
     #endregion
 
     #region Emit (gửi sự kiện)
-    public void Emit_SendMsg(MainChatManager.ChatChannels chatChannel, string msg, string nickname)
+    public void Emit_SendMsg(MainChatManager.ChatChannels chatChannel, string msg, string uid)
     {
-        SocketIO.instance.socketManager.Socket.Emit("request-send-msg", chatChannel, msg, nickname);
+        SocketIO.instance.socketManager.Socket.Emit("send-msg", chatChannel, msg, uid);
     }
     #endregion
 }

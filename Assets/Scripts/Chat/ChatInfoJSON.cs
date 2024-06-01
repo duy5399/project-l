@@ -7,6 +7,7 @@ using static MainChatManager;
 [Serializable]
 public class ChatInfoJSON
 {
+    public string uid;
     public string nickname;
     public string level;
     public string profileImg;

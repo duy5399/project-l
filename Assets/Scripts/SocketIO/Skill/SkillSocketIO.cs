@@ -12,64 +12,42 @@ public class SkillSocketIO
     #region On (lắng nghe sự kiện)
     public void SkillSocketIOStart()
     {
-        SocketIO.instance.socketManager.Socket.On<string, string, string>("get-skills-success", (skills, mySkills, job) => {
-            On_GetSkillsSuccess(skills, mySkills, job);
+        SocketIO.instance.socketManager.Socket.On<string, string, string>("init-skill-tree-success", (skills1, skills2, job) => {
+            SkillsManager.instance.DisplaySkillTree(skills1, skills2, job);
         });
-        SocketIO.instance.socketManager.Socket.On<string>("get-skills-fail", (error) => {
-            On_GetSkillsFail(error);
+
+        SocketIO.instance.socketManager.Socket.On<string>("init-skill-tree-fail", (error) => {
+            Debug.Log(error);
         });
-        SocketIO.instance.socketManager.Socket.On<string>("save-skills-success", (newSkills) => {
-            On_SaveSkillsSuccess(newSkills);
+
+        SocketIO.instance.socketManager.Socket.On<string>("save-skills-success", (skills) => {
+            SkillsManager.instance.SaveSkillsSuccess(skills);
         });
+
         SocketIO.instance.socketManager.Socket.On<string>("save-skills-fail", (error) => {
-            On_SaveSkillsFail(error);
+            Debug.Log(error);
         });
+
         SocketIO.instance.socketManager.Socket.On<string>("equip-skill-success", (skill) => {
-            On_EquipSkillSuccess(skill);
+            Debug.Log("On_EquipSkillSuccess: " + skill);
         });
+
         SocketIO.instance.socketManager.Socket.On<string>("equip-skill-fail", (error) => {
-            On_EquipSkillFail(error);
+            Debug.Log(error);
         });
+
         SocketIO.instance.socketManager.Socket.On<string>("trigger-skill-success", (skill) => {
             Debug.Log(skill.ToString());
         });
+
         SocketIO.instance.socketManager.Socket.On<string>("trigger-skill-fail", (error) => {
             Debug.Log(error.ToString());
         });
     }
-    private void On_GetSkillsSuccess(string skills, string mySkills, string job)
-    {
-        SkillsManager.instance.DisplaySkillTree(skills, mySkills, job);
-    }
-    private void On_GetSkillsFail(string error)
-    {
-        Debug.Log(error);
-    }
-    private void On_SaveSkillsSuccess(string newSkills)
-    {
-        SkillsManager.instance.SaveSkillsSuccess(newSkills);
-    }
-    private void On_SaveSkillsFail(string error)
-    {
-        Debug.Log(error);
-    }
-    private void On_EquipSkillSuccess(string skill)
-    {
-        Debug.Log("On_EquipSkillSuccess: " + skill);
-    }
-    private void On_EquipSkillFail(string error)
-    {
-        Debug.Log(error);
-    }
     #endregion
 
     #region Emit (gửi sự kiện)
-    public void Emit_GetSkills()
-    {
-        SocketIO.instance.socketManager.Socket.Emit("get-skills");
-    }
-
-    public void Emit_SaveSkills(MySkillsDataJSON newSkills)
+    public void Emit_SaveSkills(MySkills newSkills)
     {
         SocketIO.instance.socketManager.Socket.Emit("save-skills", JsonUtility.ToJson(newSkills));
     }
@@ -79,9 +57,9 @@ public class SkillSocketIO
         SocketIO.instance.socketManager.Socket.Emit("equip-skill", JsonUtility.ToJson(skill));
     }
 
-    public void Emit_TriggerSkill(SkillBaseJSON SkillBaseJSON)
+    public void Emit_TriggerSkill(string skill_id)
     {
-        SocketIO.instance.socketManager.Socket.Emit("trigger-skill", JsonUtility.ToJson(SkillBaseJSON));
+        SocketIO.instance.socketManager.Socket.Emit("trigger-skill", skill_id);
     }
     #endregion
 }

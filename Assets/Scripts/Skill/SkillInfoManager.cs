@@ -16,7 +16,7 @@ public class SkillInfoManager : MonoBehaviour
     public Button reset;
     public Button save;
 
-    public SkillNodeManager skillNodeManager;
+    public SkillNode skillNodeManager;
 
     private void Awake()
     {
@@ -33,7 +33,7 @@ public class SkillInfoManager : MonoBehaviour
     {
         resetSkillTree.onClick.AddListener(OnClick_ResetSkillTree);
         reset.onClick.AddListener(OnClick_Reset);
-        save.onClick.AddListener(OnClick_Save);
+        save.onClick.AddListener(OnClick_SaveSkills);
     }
 
     private void OnDisable()
@@ -43,7 +43,7 @@ public class SkillInfoManager : MonoBehaviour
         description.text = string.Empty;
         resetSkillTree.onClick.RemoveListener(OnClick_ResetSkillTree);
         reset.onClick.RemoveListener(OnClick_Reset);
-        save.onClick.RemoveListener(OnClick_Save);
+        save.onClick.RemoveListener(OnClick_SaveSkills);
     }
 
     void Start()
@@ -64,9 +64,9 @@ public class SkillInfoManager : MonoBehaviour
     void OnClick_Reset()
     {
         SkillsManager.instance.tempPoint = SkillsManager.instance.curPoint;
-        foreach(GameObject obj in SkillsManager.instance.skillList)
+        foreach(GameObject obj in SkillsManager.instance.skillNodeLst)
         {
-            SkillNodeManager skillNodeManager = obj.GetComponent<SkillNodeManager>();
+            SkillNode skillNodeManager = obj.GetComponent<SkillNode>();
             if (skillNodeManager == null)
             {
                 continue;
@@ -76,26 +76,24 @@ public class SkillInfoManager : MonoBehaviour
         }
     }
 
-    void OnClick_Save()
+    void OnClick_SaveSkills()
     {
         List<SkillLearn> skillLearn = new List<SkillLearn>();
-        bool checkChange = false;
-        foreach (GameObject obj in SkillsManager.instance.skillList)
+        foreach (GameObject obj in SkillsManager.instance.skillNodeLst)
         {
-            SkillNodeManager skillNodeManager = obj.GetComponent<SkillNodeManager>();
-            if (skillNodeManager == null || skillNodeManager.curLv == skillNodeManager.tempLv)
+            SkillNode skillNode = obj.GetComponent<SkillNode>();
+            if (!skillNode || skillNode.curLv == skillNode.tempLv)
             {
                 continue;
             }
-            checkChange = true;
-            SkillLearn x = new SkillLearn(skillNodeManager.skillBaseJSON.skill_id, skillNodeManager.tempLv, -2);
-            skillLearn.Add(x);
+            SkillLearn skillChange = new SkillLearn(skillNode.skillBase.skill_id, skillNode.skillBase.skill_use_type, skillNode.tempLv, -2);
+            skillLearn.Add(skillChange);
         }
-        if (!checkChange)
+        if (skillLearn.Count() == 0)
         {
             return;
         }
-        MySkillsDataJSON newSkills = new MySkillsDataJSON(SkillsManager.instance.tempPoint, skillLearn.ToArray());
+        MySkills newSkills = new MySkills(SkillsManager.instance.tempPoint, skillLearn.ToArray());
         SocketIO.instance.skillSocketIO.Emit_SaveSkills(newSkills);
     }
 }

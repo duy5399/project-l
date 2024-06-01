@@ -42,11 +42,8 @@ public class RequestAddFriendManager : MonoBehaviour
     }
     void Start()
     {
-<<<<<<< HEAD
         //GetRequestAddFriendList();
-=======
-        GetRequestAddFriendList();
->>>>>>> fe0eb62cff20252f9182d96088b832c039117485
+        this.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -54,11 +51,7 @@ public class RequestAddFriendManager : MonoBehaviour
     {
         
     }
-<<<<<<< HEAD
     public void GetRequestAddFriendList()
-=======
-    void GetRequestAddFriendList()
->>>>>>> fe0eb62cff20252f9182d96088b832c039117485
     {
         SocketIO.instance.friendSocketIO.Emit_GetRequestAddFriendList();
     }
@@ -75,19 +68,11 @@ public class RequestAddFriendManager : MonoBehaviour
 
     public void NewRequestAddFriend(FriendInfoJSON infoRequesterJSON)
     {
-<<<<<<< HEAD
         GameObject requestObj = Instantiate(Resources.Load<GameObject>("prefab/friend/FriendInfo_RequestAddFriend"));
         FriendInfo_RequestAddFriend friendInfoManager = requestObj.GetComponent<FriendInfo_RequestAddFriend>();
         friendInfoManager.friendInfoJSON = infoRequesterJSON;
         friendInfoManager.borderImage.sprite = Resources.Load<Sprite>("image/borderProfile/" + infoRequesterJSON.borderProfile);
         friendInfoManager.profileImage.sprite = Resources.Load<Sprite>("image/profileImage/" + infoRequesterJSON.profileImg);
-=======
-        GameObject requestObj = Instantiate(Resources.Load<GameObject>("Prefab/Friend/FriendInfo_RequestAddFriend"));
-        FriendInfo_RequestAddFriend friendInfoManager = requestObj.GetComponent<FriendInfo_RequestAddFriend>();
-        friendInfoManager.friendInfoJSON = infoRequesterJSON;
-        friendInfoManager.borderImage.sprite = Resources.Load<Sprite>("Image/BorderProfile/" + infoRequesterJSON.borderProfile);
-        friendInfoManager.profileImage.sprite = Resources.Load<Sprite>("Image/ProfileImage/" + infoRequesterJSON.profileImg);
->>>>>>> fe0eb62cff20252f9182d96088b832c039117485
         friendInfoManager.nicknameText.text = infoRequesterJSON.nickname;
         friendInfoManager.levelText.text = infoRequesterJSON.level;
         requestObj.transform.SetParent(requestListScrollRect.content);
@@ -95,15 +80,15 @@ public class RequestAddFriendManager : MonoBehaviour
         displayList.Add(requestObj);
     }
 
-    public void AcceptFriendSuccess(string nickname)
+    public void AcceptFriendSuccess(string uid)
     {
-        FriendInfo_RequestAddFriend friendInfo = displayList.FirstOrDefault(x => x.GetComponent<FriendInfo_RequestAddFriend>().friendInfoJSON.nickname == nickname).GetComponent<FriendInfo_RequestAddFriend>();
+        FriendInfo_RequestAddFriend friendInfo = displayList.FirstOrDefault(x => x.GetComponent<FriendInfo_RequestAddFriend>().friendInfoJSON.uid == uid).GetComponent<FriendInfo_RequestAddFriend>();
         FriendListManager.instance.NewFriendInfo(friendInfo.friendInfoJSON);
         friendInfo.gameObject.SetActive(false);
     }
 
-    public void DeclineFriendSuccess(string nickname)
+    public void DeclineFriendSuccess(string uid)
     {
-        displayList.FirstOrDefault(x => x.GetComponent<FriendInfo_RequestAddFriend>().friendInfoJSON.nickname == nickname && x.activeSelf ==true).SetActive(false);
+        displayList.FirstOrDefault(x => x.GetComponent<FriendInfo_RequestAddFriend>().friendInfoJSON.uid == uid && x.activeSelf ==true).SetActive(false);
     }
 }

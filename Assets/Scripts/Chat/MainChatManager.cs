@@ -41,7 +41,7 @@ public class MainChatManager : MonoBehaviour
     [SerializeField] private Transform recruitContent;
     [SerializeField] private Transform systemContent;
 
-    [SerializeField] private string nicknamePrivateChatString;
+    [SerializeField] private string uidPrivateChatString;
     [SerializeField] private Dictionary<string, GameObject> privateChatListDict;
     [SerializeField] private Dictionary<string, GameObject> privateContentDict;
     [SerializeField] private Image nicknamePrivateChat;
@@ -89,6 +89,7 @@ public class MainChatManager : MonoBehaviour
         privateContentDict = new Dictionary<string, GameObject>();
         nicknamePrivateChat = transform.GetChild(1).GetChild(0).GetChild(1).GetChild(1).GetComponent<Image>();
         closeButton = transform.GetChild(2).GetComponent<Button>();
+        this.gameObject.SetActive(false);
     }
 
     private void OnEnable()
@@ -104,7 +105,7 @@ public class MainChatManager : MonoBehaviour
 
         closeButton.onClick.AddListener(OnClick_Close);
         cantChatImage.gameObject.SetActive(false);
-        nicknamePrivateChatString = string.Empty;
+        uidPrivateChatString = string.Empty;
         worldChannelButton.onClick?.Invoke();
     }
 
@@ -121,7 +122,7 @@ public class MainChatManager : MonoBehaviour
 
         closeButton.onClick.RemoveListener(OnClick_Close);
         cantChatImage.gameObject.SetActive(false);
-        nicknamePrivateChatString = string.Empty;
+        uidPrivateChatString = string.Empty;
     }
 
     void Start()
@@ -197,7 +198,7 @@ public class MainChatManager : MonoBehaviour
 
     void OnClick_SendMsg()
     {
-        SocketIO.instance.chatSocketIO.Emit_SendMsg(chatChannel, msgInputField.text, nicknamePrivateChatString);
+        SocketIO.instance.chatSocketIO.Emit_SendMsg(chatChannel, msgInputField.text, uidPrivateChatString);
     }
 
     void OnClick_Close()
@@ -208,19 +209,11 @@ public class MainChatManager : MonoBehaviour
     public void DisplayMsg(string chatInfo, bool isReveice)
     {
         ChatInfoJSON chatInfoJSON = JsonConvert.DeserializeObject<ChatInfoJSON>(chatInfo);
-<<<<<<< HEAD
         GameObject newChat = Instantiate(Resources.Load<GameObject>("prefab/chat/" + (isReveice == true ? "OtherChatMessage" : "MyChatMessage")));
         ChatInfoManager chatInfoManager = newChat.GetComponent<ChatInfoManager>();
         chatInfoManager.chatInfoJSON = chatInfoJSON;
         chatInfoManager.borderImage.sprite = Resources.Load<Sprite>("image/borderProfile/" + chatInfoJSON.borderProfile);
         chatInfoManager.profileImage.sprite = Resources.Load<Sprite>("image/profileImage/" + chatInfoJSON.profileImg);
-=======
-        GameObject newChat = Instantiate(Resources.Load<GameObject>("Prefab/Chat/" + (isReveice == true ? "OtherChatMessage" : "MyChatMessage")));
-        ChatInfoManager chatInfoManager = newChat.GetComponent<ChatInfoManager>();
-        chatInfoManager.chatInfoJSON = chatInfoJSON;
-        chatInfoManager.borderImage.sprite = Resources.Load<Sprite>("Image/BorderProfile/" + chatInfoJSON.borderProfile);
-        chatInfoManager.profileImage.sprite = Resources.Load<Sprite>("Image/ProfileImage/" + chatInfoJSON.profileImg);
->>>>>>> fe0eb62cff20252f9182d96088b832c039117485
         chatInfoManager.nicknameText.text = chatInfoJSON.nickname;
         chatInfoManager.levelText.text = "Lv. " + chatInfoJSON.level;
         chatInfoManager.msgText.text = chatInfoJSON.msg;
@@ -234,19 +227,19 @@ public class MainChatManager : MonoBehaviour
                 if (isReveice)
                 {
                     //nếu chưa có người này trong danh sách thì tạo mới và thêm vào dict
-                    if (!privateChatListDict.ContainsKey(chatInfoJSON.nickname))
+                    if (!privateChatListDict.ContainsKey(chatInfoJSON.uid))
                     {
                         NewPrivateChat(chatInfoJSON);
                     }
                     //nếu chưa có bảng chat riêng cho người này thì tạo mới và thêm vào dict
-                    if (!privateContentDict.ContainsKey(chatInfoJSON.nickname))
+                    if (!privateContentDict.ContainsKey(chatInfoJSON.uid))
                     {
                         GameObject newPrivateChatContent = Instantiate(privateChatContent.gameObject, chatViewScrollRect.viewport);
-                        privateContentDict.Add(chatInfoJSON.nickname, newPrivateChatContent);
+                        privateContentDict.Add(chatInfoJSON.uid, newPrivateChatContent);
                         contentChatList.Add(newPrivateChatContent.transform);
                         newPrivateChatContent.SetActive(false);
                     }
-                    newChat.transform.SetParent(privateContentDict[chatInfoJSON.nickname].transform);
+                    newChat.transform.SetParent(privateContentDict[chatInfoJSON.uid].transform);
                 }
                 else
                 {
@@ -283,7 +276,7 @@ public class MainChatManager : MonoBehaviour
         button.colors = cb;
         button.GetComponentInChildren<TextMeshProUGUI>().color = color2;
         nicknamePrivateChat.GetComponentInChildren<TextMeshProUGUI>().text = string.Empty;
-        nicknamePrivateChatString = string.Empty;
+        uidPrivateChatString = string.Empty;
     }
 
     void ChangeChannelContent(Transform channelContent)
@@ -302,47 +295,40 @@ public class MainChatManager : MonoBehaviour
         });
     }
 
-    public void PrivateChat(string nickname, GameObject infoPrivateChat)
+    public void PrivateChat(FriendInfoJSON friendInfoJSON, GameObject infoPrivateChat)
     {
         this.gameObject.SetActive(true);
         privateChannelButton.onClick?.Invoke();
         //nếu chưa có người này trong danh sách thì tạo mới và thêm vào dict
-        if (!privateChatListDict.ContainsKey(nickname))
+        if (!privateChatListDict.ContainsKey(friendInfoJSON.uid))
         {
             GameObject newPrivateChat = Instantiate(infoPrivateChat, privateChatList);
-            privateChatListDict.Add(nickname, newPrivateChat);
+            privateChatListDict.Add(friendInfoJSON.uid, newPrivateChat);
         }
         //nếu chưa có bảng chat riêng cho người này thì tạo mới và thêm vào dict
-        if (!privateContentDict.ContainsKey(nickname))
+        if (!privateContentDict.ContainsKey(friendInfoJSON.uid))
         {
             GameObject newPrivateChatContent = Instantiate(privateChatContent.gameObject, chatViewScrollRect.viewport);
-            privateContentDict.Add(nickname, newPrivateChatContent);
+            privateContentDict.Add(friendInfoJSON.uid, newPrivateChatContent);
             contentChatList.Add(newPrivateChatContent.transform);
         }
-        ChangeChannelContent(privateContentDict[nickname].transform);
-        nicknamePrivateChatString = nickname;
-        nicknamePrivateChat.GetComponentInChildren<TextMeshProUGUI>().text = nickname;
+        ChangeChannelContent(privateContentDict[friendInfoJSON.uid].transform);
+        uidPrivateChatString = friendInfoJSON.uid;
+        nicknamePrivateChat.GetComponentInChildren<TextMeshProUGUI>().text = friendInfoJSON.nickname;
     }
 
-    public void NewPrivateChat(ChatInfoJSON ChatInfoJSON)
+    public void NewPrivateChat(ChatInfoJSON chatInfoJSON)
     {
-<<<<<<< HEAD
         GameObject newPrivateChat = Instantiate(Resources.Load<GameObject>("prefab/friend/FriendInfo_Friend"));
         FriendInfo_Friend friendInfoManager = newPrivateChat.GetComponent<FriendInfo_Friend>();
-        friendInfoManager.friendInfoJSON.nickname = ChatInfoJSON.nickname;
-        friendInfoManager.borderImage.sprite = Resources.Load<Sprite>("image/borderProfile/" + ChatInfoJSON.borderProfile);
-        friendInfoManager.profileImage.sprite = Resources.Load<Sprite>("image/profileImage/" + ChatInfoJSON.profileImg);
-=======
-        GameObject newPrivateChat = Instantiate(Resources.Load<GameObject>("Prefab/Friend/FriendInfo_Friend"));
-        FriendInfo_Friend friendInfoManager = newPrivateChat.GetComponent<FriendInfo_Friend>();
-        friendInfoManager.friendInfoJSON.nickname = ChatInfoJSON.nickname;
-        friendInfoManager.borderImage.sprite = Resources.Load<Sprite>("Image/BorderProfile/" + ChatInfoJSON.borderProfile);
-        friendInfoManager.profileImage.sprite = Resources.Load<Sprite>("Image/ProfileImage/" + ChatInfoJSON.profileImg);
->>>>>>> fe0eb62cff20252f9182d96088b832c039117485
-        friendInfoManager.nicknameText.text = ChatInfoJSON.nickname;
-        friendInfoManager.levelText.text = ChatInfoJSON.level;
+        friendInfoManager.friendInfoJSON.uid = chatInfoJSON.uid;
+        friendInfoManager.friendInfoJSON.nickname = chatInfoJSON.nickname;
+        friendInfoManager.borderImage.sprite = Resources.Load<Sprite>("image/borderProfile/" + chatInfoJSON.borderProfile);
+        friendInfoManager.profileImage.sprite = Resources.Load<Sprite>("image/profileImage/" + chatInfoJSON.profileImg);
+        friendInfoManager.nicknameText.text = chatInfoJSON.nickname;
+        friendInfoManager.levelText.text = chatInfoJSON.level;
         newPrivateChat.transform.SetParent(privateChatList);
         newPrivateChat.transform.localScale = Vector3.one;
-        privateChatListDict.Add(ChatInfoJSON.nickname, newPrivateChat);
+        privateChatListDict.Add(chatInfoJSON.uid, newPrivateChat);
     }
 }

@@ -28,12 +28,12 @@ public class FriendInfo_RequestAddFriend : FriendInfoManager
     void OnClick_AcceptRequest()
     {
         UIManager.instance.loading01Panel.gameObject.SetActive(true);
-        SocketIO.instance.friendSocketIO.Emit_AcceptRequestAddFriend(friendInfoJSON.nickname);
+        SocketIO.instance.friendSocketIO.Emit_AcceptRequestAddFriend(friendInfoJSON.uid);
     }
 
     void OnClick_DeclineRequest()
     {
         UIManager.instance.loading01Panel.gameObject.SetActive(true);
-        SocketIO.instance.friendSocketIO.Emit_DeclineRequestAddFriend(friendInfoJSON.nickname);
+        SocketIO.instance.friendSocketIO.Emit_DeclineRequestAddFriend(friendInfoJSON.uid);
     }
 }

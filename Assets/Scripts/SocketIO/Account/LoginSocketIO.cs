@@ -25,11 +25,7 @@ public class LoginSocketIO
         UIManager.instance.loading01Panel.gameObject.SetActive(false);
         LoginManager.instance.alertText.text = success;
         LoginManager.instance.alertText.color = Color.green;
-<<<<<<< HEAD
-        UIManager.instance.loadSceneManager.LoadScene("CreateCharacter");
-=======
-        UIManager.instance.loadSceneManager.LoadScene(1);
->>>>>>> fe0eb62cff20252f9182d96088b832c039117485
+        MapManager.instance.LoadMap("CreateCharacter");
     }
 
     private void On_LoginSuccessHaveCharacter(string success)
@@ -37,11 +33,7 @@ public class LoginSocketIO
         UIManager.instance.loading01Panel.gameObject.SetActive(false);
         LoginManager.instance.alertText.text = success;
         LoginManager.instance.alertText.color = Color.green;
-<<<<<<< HEAD
         //UIManager.instance.loadSceneManager.LoadScene(2);
-=======
-        UIManager.instance.loadSceneManager.LoadScene(2);
->>>>>>> fe0eb62cff20252f9182d96088b832c039117485
     }
 
     private void On_LoginFail(string error)

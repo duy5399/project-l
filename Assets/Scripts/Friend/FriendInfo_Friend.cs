@@ -29,7 +29,7 @@ public class FriendInfo_Friend : FriendInfoManager
     {
         //UIManager.instance.loading01Panel.gameObject.SetActive(true);
         //SocketIO.instance.friendSocketIO.Emit_RequestAddFriend(friendInfoJSON.nickname);
-        MainChatManager.instance.PrivateChat(_friendInfoJSON.nickname, this.gameObject);
+        MainChatManager.instance.PrivateChat(_friendInfoJSON, this.gameObject);
     }
 
     void OnClick_Unfriend()

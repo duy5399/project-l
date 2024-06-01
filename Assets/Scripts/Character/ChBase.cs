@@ -2,37 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChBase : MonoBehaviour
+public class ChBase : ObjBase
 {
-    public enum Category
-    {
-        None = 0,
-        Player = 1,
-        Npc = 2,
-        Mob = 3,
-        Boss = 4
-    }
+    public CharacterInfo chInfo;
     public bool isLocalPlayer;
-    public Category category;
 
-    public Rigidbody rb;
-    public BoxCollider boxCollider;
-    public ChCurState chCurState;
-    public ChAnim chAnim;
-    public ChMove chMove;
-    public ChSkill chSkill;
-
-    protected virtual void Awake()
+    protected override void Awake()
     {
-        rb = GetComponent<Rigidbody>();
-        boxCollider = GetComponent<BoxCollider>();
-        chCurState = GetComponent<ChCurState>();
-        chAnim = GetComponent<ChAnim>();
-        chMove = GetComponent<ChMove>();
-        chSkill = GetComponent<ChSkill>();
-
+        base.Awake();
         isLocalPlayer = false;
-        category = Category.None;
     }
 
     public float DistanceToObj(GameObject a, GameObject b)

@@ -5,31 +5,33 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class ChMove : MonoBehaviour
+public class ChMove : ObjMove
 {
     [SerializeField] private ChBase chBase;
+    [SerializeField] private ChCurState chCurState;
     public FixedJoystick joystick;
-    public bool autoMoveToTarget;
-    public float distanceWithTarget;
+    public bool isMoving;
 
-    private void Awake()
+    protected override void Awake()
     {
-        chBase = GetComponent<ChBase>();
+        chBase = this.GetComponent<ChBase>();
+        chCurState = this.GetComponent<ChCurState>();
         autoMoveToTarget = false;
+        isMoving = false;
     }
 
-    void Start()
+    protected override void Start()
     {
-        
+
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
+        base.Update();
         Move();
     }
 
-    void Move()
+    protected override void Move()
     {
         if (!joystick)
         {
@@ -39,48 +41,28 @@ public class ChMove : MonoBehaviour
         {
             distanceWithTarget = 0;
             autoMoveToTarget = false;
-            chBase.rb.velocity = new Vector3(joystick.Vertical * chBase.chCurState.moveSpeed, chBase.rb.velocity.y, -joystick.Horizontal * chBase.chCurState.moveSpeed);
-            SocketIO.instance.characterSocketIO.Emit_CharacterMove(this.transform.position);
+            chBase.rb.velocity = new Vector3(joystick.Vertical * chBase.chCurState.move_spd, chBase.rb.velocity.y, -joystick.Horizontal * chBase.chCurState.move_spd);
+            SocketIO.instance.moveControllerIO.Emit_CharacterMove(this.transform.position);
             this.transform.rotation = Quaternion.LookRotation(chBase.rb.velocity);
-            SocketIO.instance.characterSocketIO.Emit_CharacterRotate(chBase.rb.velocity);
-            //Debug.Log(chBase.rb.velocity.x + ", " + chBase.rb.velocity.y + ", " + chBase.rb.velocity.z);
+            SocketIO.instance.moveControllerIO.Emit_CharacterRotate(this.transform.rotation);
+            isMoving = true;
         }
         else if(joystick.Horizontal == 0 || joystick.Vertical == 0)
         {
             chBase.rb.velocity = Vector3.zero;
             //base.chAnim.TriggerStd();
-        }
-    }
-
-
-
-    public void AutoMoveToTarget(GameObject target, Action func = null)
-    {
-        StartCoroutine(_AutoMoveToTarget(target, func));
-    }
-
-    IEnumerator _AutoMoveToTarget(GameObject target, Action func)
-    {
-        while(chBase.DistanceToObj(this.gameObject, target) > distanceWithTarget)
-        {
-            if(!autoMoveToTarget || distanceWithTarget == 0)
+            if (isMoving)
             {
-                break;
+                if (chCurState.inCombat)
+                {
+                    SocketIO.instance.animControllerIO.Emit_CharacterTrigAnim("astd");
+                }
+                else
+                {
+                    SocketIO.instance.animControllerIO.Emit_CharacterTrigAnim("std");
+                }
+                isMoving = false;
             }
-            Vector3 vector3 = target.transform.position - this.transform.position;
-            vector3 = vector3.normalized;
-            chBase.rb.velocity = new Vector3(vector3.x * chBase.chCurState.moveSpeed, chBase.rb.velocity.y, vector3.z * chBase.chCurState.moveSpeed);
-            SocketIO.instance.characterSocketIO.Emit_CharacterMove(this.transform.position);
-            this.transform.rotation = Quaternion.LookRotation(chBase.rb.velocity);
-            SocketIO.instance.characterSocketIO.Emit_CharacterRotate(chBase.rb.velocity);
-            yield return new WaitForEndOfFrame();
         }
-        if(!autoMoveToTarget || distanceWithTarget == 0)
-        {
-            yield break;
-        }
-        distanceWithTarget = 0;
-        autoMoveToTarget = false;
-        func();
     }
 }

@@ -3,10 +3,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-<<<<<<< HEAD
-using UnityEngine.UIElements;
-=======
->>>>>>> fe0eb62cff20252f9182d96088b832c039117485
 
 public class SocketIO : MonoBehaviour
 {
@@ -15,20 +11,29 @@ public class SocketIO : MonoBehaviour
 
     [SerializeField] private LoginSocketIO _loginSocketIO;
     [SerializeField] private RegisterSocketIO _registerSocketIO;
-<<<<<<< HEAD
+
     [SerializeField] private CreateCharacterSocketIO _createCharacterSocketIO;
     [SerializeField] private CharacterSocketIO _characterSocketIO;
     [SerializeField] private ChatSocketIO _chatSocketIO;
     [SerializeField] private FriendSocketIO _friendSocketIO;
     [SerializeField] private SceneSocketIO _sceneSocketIO;
     [SerializeField] private SkillSocketIO _skillSocketIO;
+    [SerializeField] private BuffManagerSocketIO _buffManagerSocketIO;
     [SerializeField] private UISocketIO _uiSocketIO;
     [SerializeField] private CurrentStateSocketIO _currentStateSocketIO;
-=======
-    [SerializeField] private CharacterSocketIO _characterSocketIO;
-    [SerializeField] private ChatSocketIO _chatSocketIO;
-    [SerializeField] private FriendSocketIO _friendSocketIO;
->>>>>>> fe0eb62cff20252f9182d96088b832c039117485
+
+
+    [SerializeField] private AnimControllerIO _animControllerIO;
+    [SerializeField] private MoveControllerIO _moveControllerIO;
+    public AnimControllerIO animControllerIO
+    {
+        get { return _animControllerIO; }
+    }
+
+    public MoveControllerIO moveControllerIO
+    {
+        get { return _moveControllerIO; }
+    }
 
     public LoginSocketIO loginSocketIO
     {
@@ -38,13 +43,12 @@ public class SocketIO : MonoBehaviour
     {
         get { return _registerSocketIO; }
     }
-<<<<<<< HEAD
+
     public CreateCharacterSocketIO createCharacterSocketIO
     {
         get { return _createCharacterSocketIO; }
     }
-=======
->>>>>>> fe0eb62cff20252f9182d96088b832c039117485
+
     public CharacterSocketIO characterSocketIO
     {
         get { return _characterSocketIO; }
@@ -57,7 +61,7 @@ public class SocketIO : MonoBehaviour
     {
         get { return _friendSocketIO; }
     }
-<<<<<<< HEAD
+
     public SceneSocketIO sceneSocketIO
     {
         get { return _sceneSocketIO; }
@@ -67,6 +71,12 @@ public class SocketIO : MonoBehaviour
     {
         get { return _skillSocketIO; }
     }
+
+    public BuffManagerSocketIO buffManagerSocketIO
+    {
+        get { return _buffManagerSocketIO; }
+    }
+
     public CurrentStateSocketIO currentStateSocketIO
     {
         get { return _currentStateSocketIO; }
@@ -76,8 +86,7 @@ public class SocketIO : MonoBehaviour
     {
         get { return _uiSocketIO; }
     }
-=======
->>>>>>> fe0eb62cff20252f9182d96088b832c039117485
+
 
     private void Awake()
     {
@@ -91,21 +100,20 @@ public class SocketIO : MonoBehaviour
         }
         _loginSocketIO = new LoginSocketIO();
         _registerSocketIO = new RegisterSocketIO();
-<<<<<<< HEAD
         _createCharacterSocketIO = new CreateCharacterSocketIO();
         _characterSocketIO = new CharacterSocketIO();
         _chatSocketIO = new ChatSocketIO();
         _friendSocketIO = new FriendSocketIO();
         _sceneSocketIO = new SceneSocketIO();
         _skillSocketIO = new SkillSocketIO();
+        _buffManagerSocketIO = new BuffManagerSocketIO();
         _currentStateSocketIO = new CurrentStateSocketIO();
         _uiSocketIO = new UISocketIO();
-=======
-        _characterSocketIO = new CharacterSocketIO();
         _chatSocketIO = new ChatSocketIO();
         _friendSocketIO = new FriendSocketIO();
 
->>>>>>> fe0eb62cff20252f9182d96088b832c039117485
+        _animControllerIO = new AnimControllerIO();
+        _moveControllerIO = new MoveControllerIO();
     }
 
     void Start()
@@ -118,20 +126,18 @@ public class SocketIO : MonoBehaviour
 
         _loginSocketIO.LoginSocketIOStart();
         _registerSocketIO.RegisterSocketIOStart();
-<<<<<<< HEAD
         _createCharacterSocketIO.CreateCharacterSocketIOStart();
         _characterSocketIO.CharacterSocketIOStart();
         _chatSocketIO.ChatSocketIOStart();
         _friendSocketIO.FriendSocketIOStart();
         _sceneSocketIO.SceneSocketIOStart();
         _skillSocketIO.SkillSocketIOStart();
+        _buffManagerSocketIO.BuffManagerSocketIOStart();
         _currentStateSocketIO.CurrentStateSocketIOStart();
         _uiSocketIO.UISocketIOStart();
-=======
-        _characterSocketIO.CharacterSocketIOStart();
-        _chatSocketIO.ChatSocketIOStart();
-        _friendSocketIO.FriendSocketIOStart();
->>>>>>> fe0eb62cff20252f9182d96088b832c039117485
+
+        _animControllerIO.AnimControllerIOStart();
+        _moveControllerIO.MoveControllerIOStart();
     }
 
     // Update is called once per frame

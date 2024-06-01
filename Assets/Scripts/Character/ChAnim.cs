@@ -1,20 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using UnityEngine;
 
 public class ChAnim : AnimManager
 {
-    public enum Status
-    {
-        std = 0,
-        run_std = 1,
-        astd = 2,
-        run_astd = 3,
-        orther = 4
-    }
-
     [SerializeField] private ChBase chBase;
-    public Status _status;
     public RuntimeAnimatorController animCtrl;
     public RuntimeAnimatorController mountAnimCtrl;
 
@@ -25,13 +17,13 @@ public class ChAnim : AnimManager
         _animator = GetComponentInChildren<Animator>();
     }
 
-    public override void TriggerAnim(string animName, float animSpeed = 1f, bool force = false)
+    public override void TriggerAnim(string animName, float animSpeed = 1f, bool force = false, AnimEffect[] animEffects = null)
     {
         Debug.Log("TriggerAnim: " + animName + " - " + animSpeed);
-        if ((animName == "std" && _status == Status.std) || 
-            (animName == "run_std" && _status == Status.run_std) || 
-            (animName == "astd" && _status == Status.astd) || 
-            (animName == "run_astd" && _status == Status.run_astd))
+        if ((animName == "std" && status == Status.Std) || 
+            (animName == "run_std" && status == Status.Run_Std) || 
+            (animName == "astd" && status == Status.Astd) || 
+            (animName == "run_astd" && status == Status.Run_astd))
         {
             return;
         }
@@ -41,7 +33,7 @@ public class ChAnim : AnimManager
         }
         if (animName == "std")
         {
-            _status = Status.std;
+            status = Status.Std;
             animator.ResetTrigger("astd");
             animator.ResetTrigger("run_std");
             animator.ResetTrigger("dizzy");
@@ -49,21 +41,21 @@ public class ChAnim : AnimManager
         }
         else if (animName == "run_std")
         {
-            _status = Status.run_std;
+            status = Status.Run_Std;
             animator.ResetTrigger("std");
             animator.ResetTrigger("gathering");
         }
 
         if (animName == "astd")
         {
-            _status = Status.std;
+            status = Status.Std;
             animator.ResetTrigger("std");
             animator.ResetTrigger("run_astd");
             animator.ResetTrigger("dizzy");
         }
         else if (animName == "run_astd")
         {
-            _status = Status.run_std;
+            status = Status.Run_Std;
             animator.ResetTrigger("astd");
         }
 
@@ -75,14 +67,14 @@ public class ChAnim : AnimManager
             animator.ResetTrigger("run_astd");
             animator.ResetTrigger("dizzy");
             animator.ResetTrigger("gathering");
-            _status = Status.std;
+            status = Status.Std;
             animator.speed = 1f;
             this.animSpeed = 1f;
             //InterruptNowAnim();
         }
         else
         {
-            _status = Status.orther;
+            status = Status.Orther;
             //InterruptNowAnim();
         }
         animator.speed = animSpeed;
@@ -96,6 +88,57 @@ public class ChAnim : AnimManager
         {
             animator.SetTrigger(animName);
         }
+        if(animEffects == null)
+        {
+            return;
+        }
+        for(int i = 0; i < animEffects.Count(); i++)
+        {
+            SpawnAnimEffect(animEffects[i]);
+        }
+    }
+
+    public override void SpawnAnimEffect(AnimEffect animEffect)
+    {
+        GameObject effectObj = chBase.chEffect.GetEffect(animEffect);
+        if(!effectObj)
+        {
+            return;
+        }
+        if (animEffect.followHero)
+        {
+            effectObj.transform.parent = this.transform;
+        }
+        //else
+        //{
+        //    effect.transform.parent = null;
+        //}
+        if (animEffect.scaleAnimSpeed)
+        {
+            effectObj.GetComponentsInChildren<ParticleSystem>().ToList().ForEach(p =>
+            {
+                p.startDelay /= animEffect.animSpeed;
+            });
+        }
+        effectObj.transform.localRotation = new Quaternion(0f, 0f, 0f, 0f);
+        effectObj.transform.localPosition = new Vector3(animEffect.offset[0], animEffect.offset[1], animEffect.offset[2]);
+        effectObj.transform.localScale = Vector3.one;
+        effectObj.SetActive(true);
+        //component.lifeTime = effect.lifeTime;
+        GameManager.instance.WaitFor(animEffect.lifeTime, () =>
+        {
+            effectObj.SetActive(false);
+        });
+    }
+
+    public override void SpawnAnimAudio(string audio)
+    {
+        AudioClip audioClip = Resources.Load<AudioClip>("sound/" + audio);
+        if (!audioClip)
+        {
+            return;
+        }
+        chBase.audioSource.PlayOneShot(audioClip);
     }
 
     public virtual void TriggerStd(bool force = false)

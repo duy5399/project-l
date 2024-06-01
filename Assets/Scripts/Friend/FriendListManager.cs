@@ -51,11 +51,8 @@ public class FriendListManager : MonoBehaviour
 
     void Start()
     {
-<<<<<<< HEAD
         //GetFriendList();
-=======
-        GetFriendList();
->>>>>>> fe0eb62cff20252f9182d96088b832c039117485
+        this.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -64,11 +61,7 @@ public class FriendListManager : MonoBehaviour
         
     }
 
-<<<<<<< HEAD
     public void GetFriendList()
-=======
-    void GetFriendList()
->>>>>>> fe0eb62cff20252f9182d96088b832c039117485
     {
         SocketIO.instance.friendSocketIO.Emit_GetFriendList();
     }
@@ -95,36 +88,16 @@ public class FriendListManager : MonoBehaviour
         foreach (var friendInfoJSON in friendListJSON)
         {
             NewFriendInfo(friendInfoJSON);
-            //GameObject friendObj = Instantiate(Resources.Load<GameObject>("Prefab/Friend/FriendInfo_Friend"));
-            //FriendInfo_Friend friendInfoManager = friendObj.GetComponent<FriendInfo_Friend>();
-            //friendInfoManager.friendInfoJSON = friendInfoJSON;
-            //friendInfoManager.borderImage.sprite = Resources.Load<Sprite>("Image/BorderProfile/" + friendInfoJSON.borderProfile);
-            //friendInfoManager.profileImage.sprite = Resources.Load<Sprite>("Image/ProfileImage/" + friendInfoJSON.profileImg);
-            //friendInfoManager.nicknameText.text = friendInfoJSON.nickname;
-            //friendInfoManager.levelText.text = friendInfoJSON.level;
-            //friendInfoManager.stateOnlineText.text = friendInfoJSON.isOnline == true ? "#Online" : "#Offline";
-            //friendInfoManager.stateOnlineText.color = friendInfoJSON.isOnline == true ? Color.green : Color.gray;
-            //friendObj.transform.SetParent(friendListScrollRect.content);
-            //friendObj.transform.localScale = Vector3.one;
-            //displayList.Add(friendInfoJSON);
         }
     }
 
     public void NewFriendInfo(FriendInfoJSON friendInfoJSON)
     {
-<<<<<<< HEAD
         GameObject friendObj = Instantiate(Resources.Load<GameObject>("prefab/friend/FriendInfo_Friend"));
         FriendInfo_Friend friendInfoManager = friendObj.GetComponent<FriendInfo_Friend>();
         friendInfoManager.friendInfoJSON = friendInfoJSON;
         friendInfoManager.borderImage.sprite = Resources.Load<Sprite>("image/borderProfile/" + friendInfoJSON.borderProfile);
         friendInfoManager.profileImage.sprite = Resources.Load<Sprite>("image/profileImage/" + friendInfoJSON.profileImg);
-=======
-        GameObject friendObj = Instantiate(Resources.Load<GameObject>("Prefab/Friend/FriendInfo_Friend"));
-        FriendInfo_Friend friendInfoManager = friendObj.GetComponent<FriendInfo_Friend>();
-        friendInfoManager.friendInfoJSON = friendInfoJSON;
-        friendInfoManager.borderImage.sprite = Resources.Load<Sprite>("Image/BorderProfile/" + friendInfoJSON.borderProfile);
-        friendInfoManager.profileImage.sprite = Resources.Load<Sprite>("Image/ProfileImage/" + friendInfoJSON.profileImg);
->>>>>>> fe0eb62cff20252f9182d96088b832c039117485
         friendInfoManager.nicknameText.text = friendInfoJSON.nickname;
         friendInfoManager.levelText.text = friendInfoJSON.level;
         friendInfoManager.stateOnlineText.text = friendInfoJSON.isOnline == true ? "#Online" : "#Offline";

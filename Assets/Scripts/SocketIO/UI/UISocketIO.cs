@@ -19,7 +19,6 @@ public class UISocketIO
         GameManager.instance.ui_feature.SetActive(true);
         GameManager.instance.ui_feature.GetComponentInChildren<FriendListManager>().GetFriendList();
         GameManager.instance.ui_feature.GetComponentInChildren<RequestAddFriendManager>().GetRequestAddFriendList();
-        GameManager.instance.ui_feature.GetComponentInChildren<SkillsManager>().GetSkills();
     }
     #endregion
 }
